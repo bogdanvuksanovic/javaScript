@@ -9,6 +9,7 @@ function addToCart(element){
 
     //console.log(total);
 
+
     //console.log(typeof(quantity))
     let quantityInt = parseInt(quantity);
 
@@ -28,7 +29,7 @@ function addToCart(element){
         </div>
         `;
 
-        element.innerText = `Added`;
+        element.innerText = `Dodato`;
         element.setAttribute(`disabled`,``);
 
         total.innerHTML = `<hr>Ukupan racun: ${totalItems}`;
@@ -36,7 +37,7 @@ function addToCart(element){
         console.log(totalItems)
 
     }else{
-        console.log(`Dodati kolicinu`)
+        alert(`Dodati kolicinu`)
     }
 }
 
@@ -55,4 +56,5 @@ function removeItem(element){
 
     container.remove();
 
+    
 }
