@@ -61,7 +61,7 @@ h3 {
 
 .item img {
     max-width: 150px;
-    margin-left: 10px;
+    margin-left: 15px;
     padding-top: 10px;
     border-radius: 20px;
 }
@@ -109,7 +109,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
 }
 
 .cart-items h3 {
@@ -125,8 +125,10 @@ h3 {
 }
 
 .total{
+    padding-top: 10px;
     position: absolute;
     bottom: 20px;
     left: 20px;
     font-size: 24px;
+    padding-top: 10px;
 }

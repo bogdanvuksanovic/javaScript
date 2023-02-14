@@ -1,6 +1,7 @@
 let totalItems = 0;
+let itemsInCart = [];
 function addToCart(element){
-    let productsInCart = [];
+    
     let container = element.closest(`.one-item`);
     let price = container.querySelector(`.price`).innerText;
     let name = container.querySelector(`h3`).innerText;
@@ -14,22 +15,31 @@ function addToCart(element){
     //console.log(typeof(quantity))
     let quantityInt = parseInt(quantity);
 
+ 
+
     //console.log(typeof(quantityInt))
 
 
-
     if(quantityInt > 0){
-
         let totalItem = quantityInt * price;
         totalItems += totalItem;
+        let itemsInCart = {
+            name: name,
+            price: price,
+            quantity: quantityInt,
+            priceAll: totalItem
+        }
+        
         items.innerHTML += `
         <div class="selected-items">
             <h3>${name}</h3>
-            <p>Cena: ${price}<br>Kolicina: ${quantityInt}<br>Cena: <span>${totalItem}</span>
+            <p>Cena: ${price}<br>
+            Kolicina: ${quantityInt}<br>
+            Cena: <span>${totalItem}</span>
             <button id="dltBtn" onClick="removeItem(this)">Obrisati porudzbinu</button>
         </div>
         `;
-
+        localStorage.setItem(`shopCart`, JSON.stringify(itemsInCart));
 
         element.innerText = `Dodato`;
         //element.setAttribute(`disabled`,``);
@@ -51,7 +61,7 @@ function removeItem(element){
     //console.log(price)
     totalItem = parseInt(totalItem);
 
-    console.log(typeof(totalItems))
+    //console.log(typeof(totalItems))
 
     totalItems -= totalItem;
     total.innerHTML = `<hr>Ukupan racun: ${totalItems}`;
