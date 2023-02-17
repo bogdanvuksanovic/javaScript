@@ -4,6 +4,13 @@
     padding: 0;
 }
 
+@media screen and (max-width: 600px) {
+    .topnav a {
+      float: none;
+      width: 100%;
+    }
+}
+
 body {
     background-image: url('imgs/bg.jpg');
     background-size: cover;
@@ -60,7 +67,7 @@ h3 {
 }
 
 .item img {
-    max-width: 150px;
+    max-width: 160px;
     margin-left: 15px;
     padding-top: 10px;
     border-radius: 20px;
@@ -91,6 +98,7 @@ h3 {
     height: 40px;
     text-align: center;
     font-size: 18px;
+    border-radius: 10px;
 }
 
 .item .action button {
@@ -99,6 +107,35 @@ h3 {
     font-size: 16px;
     width: 60px;
     height: 40px;
+    border-radius: 10px;
+}
+
+
+.inputs{
+    display: inline-flex;
+    margin-top: 30px;
+    padding-top: 15px;
+    margin-bottom: 20px;
+}
+
+.inputs button{
+    border-radius: 5px;
+    height: 40px;
+    margin-left: 5px;
+    width: 90px;
+    background-color: white;
+    color: red;
+    border:1px solid red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.cart-quantity{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin-left: 50px;
+    text-align: center;
 }
 
 .one-item{
@@ -112,6 +149,7 @@ h3 {
     margin-bottom: 50px;
 }
 
+
 .cart-items h3 {
     margin-bottom: 0;
     text-align: center;
@@ -119,9 +157,28 @@ h3 {
 
 .cart-items button {
     padding: 5px;
-    width: 60px;
+    width: 50px;
     height: 40px;
     border: 1px solid red;
+}
+
+.selected-items{
+    display: flex;
+    margin-top: 10px;
+    border-bottom: 1px solid gray;
+}
+
+#purchase{
+    font-size: large;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    align-items: center;
+    height: 60px;
+    width: 200px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: green;
+    color: white;
 }
 
 .total{

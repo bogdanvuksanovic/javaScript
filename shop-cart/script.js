@@ -1,5 +1,6 @@
 let totalItems = 0;
 let itemsInCart = [];
+let cart = [];
 function addToCart(element){
     
     let container = element.closest(`.one-item`);
@@ -23,28 +24,36 @@ function addToCart(element){
     if(quantityInt > 0){
         let totalItem = quantityInt * price;
         totalItems += totalItem;
-        let itemsInCart = {
+        /*itemsInCart = {
             name: name,
             price: price,
             quantity: quantityInt,
             priceAll: totalItem
-        }
+        }*/
         
         items.innerHTML += `
         <div class="selected-items">
-            <h3>${name}</h3>
-            <p>Cena: ${price}<br>
-            Kolicina: ${quantityInt}<br>
-            Cena: <span>${totalItem}</span>
-            <button id="dltBtn" onClick="removeItem(this)">Obrisati porudzbinu</button>
+            <div class="itemss">
+                <h3>${name}</h3>
+                Cena: ${price}<br>
+                Kolicina: ${quantityInt}<br>
+                Cena: <span>${totalItem}</span><br>
+            </div>
+            <div class="inputs">
+                <input class="cart-quantity" type = "number"  min = 0 value="${quantityInt}">
+                <button id="dltBtn" onClick="removeItem(this)">Obrisati porudzbinu</button>
+            </div>
         </div>
         `;
-        localStorage.setItem(`shopCart`, JSON.stringify(itemsInCart));
-
+        
+        localStorage.setItem("shopCart", JSON.stringify(cart));
         element.innerText = `Dodato`;
         //element.setAttribute(`disabled`,``);
 
-        total.innerHTML = `<hr>Ukupan racun: ${totalItems}`;
+        total.innerHTML = `
+        <button id="purchase" onClick="purchase()">Zavrsi porudzbinu</button>
+        <hr>Ukupan racun: ${totalItems}
+        `;
 
         console.log(totalItems)
 
@@ -53,10 +62,14 @@ function addToCart(element){
     }
 }
 
+function updateList(){
+    
+}
+
 function removeItem(element){
 
     let container = element.closest(`.selected-items`);
-    let totalItem = container.querySelector(`p span`).innerText;
+    let totalItem = container.querySelector(`span`).innerText;
     let total = document.querySelector(`.total`);
     //console.log(price)
     totalItem = parseInt(totalItem);
@@ -64,9 +77,33 @@ function removeItem(element){
     //console.log(typeof(totalItems))
 
     totalItems -= totalItem;
-    total.innerHTML = `<hr>Ukupan racun: ${totalItems}`;
+    total.innerHTML = `
+    <button id="purchase" onClick="purchase()">Zavrsi porudzbinu</button>
+    <hr>Ukupan racun: ${totalItems}`;
 
+    container.remove(element); 
+}
+
+function purchase(){
+
+    let container = document.querySelector(".items");
+    let total = document.querySelector(`.total`);
+    let totalItem = container.querySelector(`span`).innerText;
+
+    //console.log(price)
+    totalItem = parseInt(totalItem);
+
+    console.log(typeof(totalItems))
+    alert(`Uspesno izvrsena kupovina, vas racun je ${totalItems}`);
+    totalItems -= totalItems;
+    total.innerHTML = `
+        <hr>Ukupan racun: ${totalItems}
+    `;
+
+    console.log(totalItems)
+
+    console.log(container);
+    
     container.remove();
-
     
 }
