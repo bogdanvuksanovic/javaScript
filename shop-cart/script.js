@@ -15,7 +15,7 @@ function addToCart(element){
 
     //console.log(typeof(quantity))
     let quantityInt = parseInt(quantity);
-
+    let priceInt = parseInt(price)
  
 
     //console.log(typeof(quantityInt))
@@ -24,12 +24,12 @@ function addToCart(element){
     if(quantityInt > 0){
         let totalItem = quantityInt * price;
         totalItems += totalItem;
-        /*itemsInCart = {
+        cart = [{
             name: name,
-            price: price,
+            price: priceInt,
             quantity: quantityInt,
             priceAll: totalItem
-        }*/
+        }]
         
         items.innerHTML += `
         <div class="selected-items">
@@ -41,17 +41,26 @@ function addToCart(element){
             </div>
             <div class="inputs">
                 <input class="cart-quantity" type = "number"  min = 0 value="${quantityInt}">
-                <button id="dltBtn" onClick="removeItem(this)">Obrisati porudzbinu</button>
+                <button id="dltBtn" onclick="removeItem(this)">Obrisati porudzbinu</button>
             </div>
         </div>
         `;
-        
-        localStorage.setItem("shopCart", JSON.stringify(cart));
+
+        cart.push(items.value)
+        localStorage.setItem("shopCart", JSON.stringify( cart));
+        //container.push(items[0])
+        for(let i = 0; i < cart.length; i++){
+            
+
+        };
+
+        console.log(cart);
+
         element.innerText = `Dodato`;
-        //element.setAttribute(`disabled`,``);
+        element.setAttribute(`disabled`,``);
 
         total.innerHTML = `
-        <button id="purchase" onClick="purchase()">Zavrsi porudzbinu</button>
+        <button id="purchase" onclick="purchase()">Zavrsi porudzbinu</button>
         <hr>Ukupan racun: ${totalItems}
         `;
 
@@ -62,8 +71,8 @@ function addToCart(element){
     }
 }
 
-function updateList(){
-    
+function updateList(element){
+    addToCart(element);
 }
 
 function removeItem(element){
@@ -71,6 +80,9 @@ function removeItem(element){
     let container = element.closest(`.selected-items`);
     let totalItem = container.querySelector(`span`).innerText;
     let total = document.querySelector(`.total`);
+    let name = container.querySelector(`h3`).innerText;
+    let items = document.querySelectorAll(`.one-item`);
+
     //console.log(price)
     totalItem = parseInt(totalItem);
 
@@ -82,13 +94,31 @@ function removeItem(element){
     <hr>Ukupan racun: ${totalItems}`;
 
     container.remove(element); 
+
+    console.log(name);
+
+    items.forEach(function(pizza){
+        let nameItem = pizza.querySelector(`.content h3`).innerText;
+        if(nameItem === name){
+            pizza.querySelector(`.action input`).value = 0;
+            pizza.querySelector(`.action button`).removeAttribute(`disabled`);
+
+            pizza.querySelector(`.action button`).innerText = `Dodaj`;
+        }
+        console.log(nameItem)
+    });
+
+
 }
 
 function purchase(){
 
     let container = document.querySelector(".items");
+    let selectedItems = document.querySelectorAll(`.selected-items`)
     let total = document.querySelector(`.total`);
-    let totalItem = container.querySelector(`span`).innerText;
+    let totalItem = document.querySelector(`span`).innerText;
+    let name = container.querySelector(`h3`).innerText;
+    let items = document.querySelectorAll(`.one-item`);
 
     //console.log(price)
     totalItem = parseInt(totalItem);
@@ -100,10 +130,21 @@ function purchase(){
         <hr>Ukupan racun: ${totalItems}
     `;
 
-    console.log(totalItems)
+    console.log(totalItems);
 
-    console.log(container);
+    console.log(selectedItems);
     
     container.remove();
+
+    items.forEach(function(pizza){
+        let nameItem = pizza.querySelector(`.content h3`).innerText;
+        if(nameItem === name){
+            pizza.querySelector(`.action input`).value = 0;
+            pizza.querySelector(`.action button`).removeAttribute(`disabled`);
+
+            pizza.querySelector(`.action button`).innerText = `Dodaj`;
+        }
+        console.log(nameItem)
+    });
     
 }

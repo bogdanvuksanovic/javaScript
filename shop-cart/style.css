@@ -98,6 +98,7 @@ h3 {
     height: 40px;
     text-align: center;
     font-size: 18px;
+    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -107,6 +108,7 @@ h3 {
     font-size: 16px;
     width: 60px;
     height: 40px;
+    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -118,6 +120,12 @@ h3 {
     margin-bottom: 20px;
 }
 
+.inputs input{
+    border: 2px solid black;
+    font-weight: bold;
+    text-align: center;
+}
+
 .inputs button{
     border-radius: 5px;
     height: 40px;
@@ -125,7 +133,7 @@ h3 {
     width: 90px;
     background-color: white;
     color: red;
-    border:1px solid red;
+    border: 2px solid red;
     font-weight: bold;
     text-align: center;
 }
