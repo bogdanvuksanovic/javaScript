@@ -103,6 +103,7 @@ h3 {
 }
 
 .item .action button {
+    cursor: pointer;
     padding-top: 10px;
     margin-top: 10px;
     font-size: 16px;
@@ -127,6 +128,7 @@ h3 {
 }
 
 .inputs button{
+    cursor: pointer;
     border-radius: 5px;
     height: 40px;
     margin-left: 5px;
@@ -136,6 +138,17 @@ h3 {
     border: 2px solid red;
     font-weight: bold;
     text-align: center;
+}
+
+#dltBtn:hover{
+    background-color: red;
+    color: white;
+}
+
+#dltBtn:active{
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 .cart-quantity{
@@ -177,6 +190,7 @@ h3 {
 }
 
 #purchase{
+    cursor: pointer;
     font-size: large;
     margin-left: 40px;
     margin-bottom: 20px;
@@ -185,8 +199,19 @@ h3 {
     width: 200px;
     border-radius: 10px;
     font-weight: bold;
+    border: none;
     background-color: green;
     color: white;
+}
+
+#purchase:hover{
+    background-color: #3e8e41;
+}
+
+#purchase:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 .total{

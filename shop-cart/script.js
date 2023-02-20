@@ -12,7 +12,7 @@ function addToCart(element){
 
     //console.log(total);
 
-
+    price = price.substring(1,price.length)
     //console.log(typeof(quantity))
     let quantityInt = parseInt(quantity);
     let priceInt = parseInt(price)
@@ -35,13 +35,13 @@ function addToCart(element){
         <div class="selected-items">
             <div class="itemss">
                 <h3>${name}</h3>
-                Cena: ${price}<br>
-                Kolicina: ${quantityInt}<br>
-                Cena: <span>${totalItem}</span><br>
+                Price: $${price}<br>
+                Quantity: ${quantityInt}<br>
+                Total price: <span>$${totalItem}</span><br>
             </div>
             <div class="inputs">
                 <input class="cart-quantity" type = "number"  min = 0 value="${quantityInt}">
-                <button id="dltBtn" onclick="removeItem(this)">Obrisati porudzbinu</button>
+                <button id="dltBtn" onclick="removeItem(this)">Delete the order</button>
             </div>
         </div>
         `;
@@ -56,18 +56,18 @@ function addToCart(element){
 
         console.log(cart);
 
-        element.innerText = `Dodato`;
+        element.innerText = `Added`;
         element.setAttribute(`disabled`,``);
 
         total.innerHTML = `
-        <button id="purchase" onclick="purchase()">Zavrsi porudzbinu</button>
-        <hr>Ukupan racun: ${totalItems}
+        <button id="purchase" onclick="purchase()">Complete the order</button>
+        <hr>Total bill: $${totalItems}
         `;
 
         console.log(totalItems)
 
     }else{
-        alert(`Dodati kolicinu`)
+        alert(`Add quantity`)
     }
 }
 
@@ -83,15 +83,21 @@ function removeItem(element){
     let name = container.querySelector(`h3`).innerText;
     let items = document.querySelectorAll(`.one-item`);
 
+
+    totalItem = totalItem.substring(1,totalItem.length)
     //console.log(price)
+    //console.log(typeof(totalItem))
     totalItem = parseInt(totalItem);
 
     //console.log(typeof(totalItems))
-
+    console.log(totalItems)
     totalItems -= totalItem;
+
+    console.log(totalItems)
     total.innerHTML = `
-    <button id="purchase" onClick="purchase()">Zavrsi porudzbinu</button>
-    <hr>Ukupan racun: ${totalItems}`;
+    <button id="purchase" onClick="purchase()">Complete the order</button>
+    <hr>Ukupan racun: $${totalItems}
+    `;
 
     container.remove(element); 
 
@@ -103,7 +109,7 @@ function removeItem(element){
             pizza.querySelector(`.action input`).value = 0;
             pizza.querySelector(`.action button`).removeAttribute(`disabled`);
 
-            pizza.querySelector(`.action button`).innerText = `Dodaj`;
+            pizza.querySelector(`.action button`).innerText = `Add`;
         }
         console.log(nameItem)
     });
@@ -124,17 +130,16 @@ function purchase(){
     totalItem = parseInt(totalItem);
 
     console.log(typeof(totalItems))
-    alert(`Uspesno izvrsena kupovina, vas racun je ${totalItems}`);
+    alert(`You have successfuly completed the order, your bill is $${totalItems}`);
     totalItems -= totalItems;
     total.innerHTML = `
-        <hr>Ukupan racun: ${totalItems}
+        <hr>Total bill: $${totalItems}
     `;
 
     console.log(totalItems);
 
     console.log(selectedItems);
     
-    container.remove();
 
     items.forEach(function(pizza){
         let nameItem = pizza.querySelector(`.content h3`).innerText;
@@ -142,9 +147,10 @@ function purchase(){
             pizza.querySelector(`.action input`).value = 0;
             pizza.querySelector(`.action button`).removeAttribute(`disabled`);
 
-            pizza.querySelector(`.action button`).innerText = `Dodaj`;
+            pizza.querySelector(`.action button`).innerText = `Add`;
         }
         console.log(nameItem)
     });
-    
+    container.remove();
+
 }
