@@ -14,15 +14,18 @@ function addToCart(element){
 
     price = price.substring(1,price.length)
     //console.log(typeof(quantity))
+    price = parseInt(price)
     let quantityInt = parseInt(quantity);
     let priceInt = parseInt(price)
+
+    console.log(typeof(priceInt))
  
 
     //console.log(typeof(quantityInt))
 
 
     if(quantityInt > 0){
-        let totalItem = quantityInt * price;
+        let totalItem = quantityInt * priceInt;
         totalItems += totalItem;
         cart = [{
             name: name,
@@ -35,8 +38,7 @@ function addToCart(element){
         <div class="selected-items">
             <div class="itemss">
                 <h3>${name}</h3>
-                Price: $${price}<br>
-                Quantity: ${quantityInt}<br>
+                Price: $${priceInt}<br>
                 Total price: <span>$${totalItem}</span><br>
             </div>
             <div class="inputs">
@@ -49,12 +51,9 @@ function addToCart(element){
         cart.push(items.value)
         localStorage.setItem("shopCart", JSON.stringify( cart));
         //container.push(items[0])
-        for(let i = 0; i < cart.length; i++){
-            
 
-        };
 
-        console.log(cart);
+        //console.log(cart);
 
         element.innerText = `Added`;
         element.setAttribute(`disabled`,``);
@@ -66,13 +65,35 @@ function addToCart(element){
 
         console.log(totalItems)
 
+        items.getElementsByClassName(`cart-quantity`)[0].addEventListener(`change`, quantityChanged)
+
     }else{
         alert(`Add quantity`)
     }
 }
 
-function updateList(element){
-    addToCart(element);
+function quantityChanged(element) {
+    input = document.querySelector(`.cart-quantity`).value;
+    if(isNaN(input.value) || input.value <= 0){
+        input.value = 1;
+    }
+    updateList()
+}
+
+function updateList(){
+    var cartItemContainer = document.getElementsByClassName('content')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('itemss')
+    var total = 0
+    /*for (var i = 0; i < cartRows.length; i++) {
+        var cartRow = cartRows[i]
+        var priceElement = cartRow.getElementsByClassName('price')[0]
+        var quantityElement = cartRow.getElementsByClassName('quantity')[0]
+        var price = parseFloat(priceElement.innerText.replace('$', ''))
+        var quantity = quantityElement.value
+        total = total + (price * quantity)
+    }*/
+    document.querySelector('span').innerText = '$' + total
+    //console.log(cartRows)
 }
 
 function removeItem(element){
@@ -96,7 +117,7 @@ function removeItem(element){
     console.log(totalItems)
     total.innerHTML = `
     <button id="purchase" onClick="purchase()">Complete the order</button>
-    <hr>Ukupan racun: $${totalItems}
+    <hr>Bill: $${totalItems}
     `;
 
     container.remove(element); 
@@ -113,8 +134,6 @@ function removeItem(element){
         }
         console.log(nameItem)
     });
-
-
 }
 
 function purchase(){
@@ -143,14 +162,13 @@ function purchase(){
 
     items.forEach(function(pizza){
         let nameItem = pizza.querySelector(`.content h3`).innerText;
-        if(nameItem === name){
-            pizza.querySelector(`.action input`).value = 0;
-            pizza.querySelector(`.action button`).removeAttribute(`disabled`);
-
-            pizza.querySelector(`.action button`).innerText = `Add`;
-        }
+        pizza.querySelector(`.action input`).value = 0;
+        pizza.querySelector(`.action button`).removeAttribute(`disabled`);
+        pizza.querySelector(`.action button`).innerText = `Add`;
         console.log(nameItem)
     });
-    container.remove();
+    while(container.hasChildNodes()){
+        container.removeChild(container.firstChild);
+    }
 
 }
