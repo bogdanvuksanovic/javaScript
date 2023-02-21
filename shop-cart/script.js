@@ -18,7 +18,7 @@ function addToCart(element){
     let quantityInt = parseInt(quantity);
     let priceInt = parseInt(price)
 
-    console.log(typeof(priceInt))
+    //console.log(typeof(priceInt))
  
 
     //console.log(typeof(quantityInt))
@@ -33,16 +33,16 @@ function addToCart(element){
             quantity: quantityInt,
             priceAll: totalItem
         }]
-        
+
         items.innerHTML += `
         <div class="selected-items">
             <div class="itemss">
                 <h3>${name}</h3>
-                Price: $${priceInt}<br>
-                Total price: <span>$${totalItem}</span><br>
+                Price: $<span class="pricee">${priceInt}</span><br>
+                Total price: <p clas="totalPrice">$${totalItem}</p><br>
             </div>
             <div class="inputs">
-                <input class="cart-quantity" type = "number"  min = 0 value="${quantityInt}">
+                <input class="cart-quantity" type = "number"  min = 1 value="${quantityInt}">
                 <button id="dltBtn" onclick="removeItem(this)">Delete the order</button>
             </div>
         </div>
@@ -63,10 +63,11 @@ function addToCart(element){
         <hr>Total bill: $${totalItems}
         `;
 
-        console.log(totalItems)
+        //console.log(totalItems)
 
         items.getElementsByClassName(`cart-quantity`)[0].addEventListener(`change`, quantityChanged)
 
+        
     }else{
         alert(`Add quantity`)
     }
@@ -82,18 +83,37 @@ function quantityChanged(element) {
 
 function updateList(){
     var cartItemContainer = document.getElementsByClassName('content')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('itemss')
-    var total = 0
-    /*for (var i = 0; i < cartRows.length; i++) {
+    var cartRows = document.getElementsByClassName('items');
+    //var cartItem = document.getElementsByClassName('selected-items');
+
+    let totalItem = 0
+    //let totalItems = 0;
+    for (var i = 0; i < cartRows.length; i++) {
         var cartRow = cartRows[i]
-        var priceElement = cartRow.getElementsByClassName('price')[0]
-        var quantityElement = cartRow.getElementsByClassName('quantity')[0]
-        var price = parseFloat(priceElement.innerText.replace('$', ''))
+        var priceElement = cartRow.getElementsByClassName('pricee')[0]
+        var quantityElement = cartRow.getElementsByClassName('cart-quantity')[0]
+        var price = priceElement.innerText;
+        console.log(priceElement)
+        //price = price.substring(1, price.length)
+        price = parseInt(price)
+        console.log(quantityElement)
         var quantity = quantityElement.value
-        total = total + (price * quantity)
-    }*/
-    document.querySelector('span').innerText = '$' + total
-    //console.log(cartRows)
+        totalItem = (price * quantity)
+        console.log(price)
+        console.log(quantity)
+        totalItems += totalItem
+    }
+    let selItems = document.querySelector('.selected-items');
+    let totalPrice = selItems.querySelector('p').innerText = `$` + totalItem;
+    console.log(cartRows.length)
+    
+    //totalPrice[0].innerText = totalItem
+
+    
+
+    console.log(totalItem)
+    console.log(totalItems)
+
 }
 
 function removeItem(element){
@@ -117,7 +137,7 @@ function removeItem(element){
     console.log(totalItems)
     total.innerHTML = `
     <button id="purchase" onClick="purchase()">Complete the order</button>
-    <hr>Bill: $${totalItems}
+    <hr>Total bill: $${totalItems}
     `;
 
     container.remove(element); 
