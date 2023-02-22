@@ -1,5 +1,4 @@
 let totalItems = 0;
-let itemsInCart = [];
 let cart = [];
 function addToCart(element){
     
@@ -10,19 +9,10 @@ function addToCart(element){
     let items = document.querySelector(`.items`);
     let total = document.querySelector(`.total`);
 
-    //console.log(total);
-
     price = price.substring(1,price.length)
-    //console.log(typeof(quantity))
     price = parseInt(price)
     let quantityInt = parseInt(quantity);
     let priceInt = parseInt(price)
-
-    //console.log(typeof(priceInt))
- 
-
-    //console.log(typeof(quantityInt))
-
 
     if(quantityInt > 0){
         let totalItem = quantityInt * priceInt;
@@ -39,7 +29,7 @@ function addToCart(element){
             <div class="itemss">
                 <h3>${name}</h3>
                 Price: $<span class="pricee">${priceInt}</span><br>
-                Total price: <p clas="totalPrice">$${totalItem}</p><br>
+                <p clas="totalPrice">Total price: $${totalItem}</p><br>
             </div>
             <div class="inputs">
                 <input class="cart-quantity" type = "number"  min = 1 value="${quantityInt}">
@@ -50,20 +40,15 @@ function addToCart(element){
 
         cart.push(items.value)
         localStorage.setItem("shopCart", JSON.stringify( cart));
-        //container.push(items[0])
-
-
-        //console.log(cart);
 
         element.innerText = `Added`;
         element.setAttribute(`disabled`,``);
 
         total.innerHTML = `
         <button id="purchase" onclick="purchase()">Complete the order</button>
-        <hr>Total bill: $${totalItems}
+        <hr>
+        <div class='total-bill'>Total bill: $${totalItems}</div>
         `;
-
-        //console.log(totalItems)
 
         items.getElementsByClassName(`cart-quantity`)[0].addEventListener(`change`, quantityChanged)
 
@@ -82,62 +67,42 @@ function quantityChanged(element) {
 }
 
 function updateList(){
-    var cartItemContainer = document.getElementsByClassName('content')[0]
-    var cartRows = document.getElementsByClassName('items');
-    //var cartItem = document.getElementsByClassName('selected-items');
 
-    let totalItem = 0
-    //let totalItems = 0;
-    for (var i = 0; i < cartRows.length; i++) {
-        var cartRow = cartRows[i]
-        var priceElement = cartRow.getElementsByClassName('pricee')[0]
-        var quantityElement = cartRow.getElementsByClassName('cart-quantity')[0]
-        var price = priceElement.innerText;
-        console.log(priceElement)
-        //price = price.substring(1, price.length)
-        price = parseInt(price)
-        console.log(quantityElement)
-        var quantity = quantityElement.value
-        totalItem = (price * quantity)
-        console.log(price)
+    let selItems = document.querySelectorAll(`.selected-items`);
+    let totalElement = document.querySelector(`.total-bill`);
+
+    let totalItems = 0;
+    selItems.forEach((selItem)=>{
+        let priceElement = selItem.querySelector(`.pricee`);
+        let price = parseInt(priceElement.innerHTML.replace("$",""));
+        let quantity = selItem.querySelector(`.cart-quantity`).value;
+        totalItems += price*quantity;
+        console.log(typeof(price))
         console.log(quantity)
-        totalItems += totalItem
-    }
-    let selItems = document.querySelector('.selected-items');
-    let totalPrice = selItems.querySelector('p').innerText = `$` + totalItem;
-    console.log(cartRows.length)
-    
-    //totalPrice[0].innerText = totalItem
+    })
 
-    
-
-    console.log(totalItem)
-    console.log(totalItems)
-
+    totalElement.innerHTML =`<div class='total-bill'>Total bill: $${totalItems}</div>`;
 }
 
 function removeItem(element){
 
     let container = element.closest(`.selected-items`);
-    let totalItem = container.querySelector(`span`).innerText;
+    let totalItem = container.querySelector(`p`).innerText;
     let total = document.querySelector(`.total`);
     let name = container.querySelector(`h3`).innerText;
     let items = document.querySelectorAll(`.one-item`);
 
-
-    totalItem = totalItem.substring(1,totalItem.length)
-    //console.log(price)
-    //console.log(typeof(totalItem))
+    totalItem = totalItem.substring(14,totalItem.length)
+    
     totalItem = parseInt(totalItem);
-
-    //console.log(typeof(totalItems))
+    console.log(totalItem)
     console.log(totalItems)
     totalItems -= totalItem;
 
     console.log(totalItems)
     total.innerHTML = `
     <button id="purchase" onClick="purchase()">Complete the order</button>
-    <hr>Total bill: $${totalItems}
+    <hr><div class='total-bill'>Total bill: $${totalItems}</div>
     `;
 
     container.remove(element); 
@@ -160,35 +125,36 @@ function purchase(){
 
     let container = document.querySelector(".items");
     let selectedItems = document.querySelectorAll(`.selected-items`)
-    let total = document.querySelector(`.total`);
-    let totalItem = document.querySelector(`span`).innerText;
+    let total = document.querySelector(`.total-bill`);
+    let totalItem = document.querySelector(`.total-bill`).innerText;
     let name = container.querySelector(`h3`).innerText;
     let items = document.querySelectorAll(`.one-item`);
 
-    //console.log(price)
+    
+    totalItem = totalItem.substring(13, totalItem.length)
     totalItem = parseInt(totalItem);
-
+    console.log(totalItem)
     console.log(typeof(totalItems))
-    alert(`You have successfuly completed the order, your bill is $${totalItems}`);
+    updateList();
+
+    alert(`You have successfuly completed the order, your bill is $${totalItem}`);
     totalItems -= totalItems;
     total.innerHTML = `
-        <hr>Total bill: $${totalItems}
+        Total bill: $${totalItems}
     `;
 
     console.log(totalItems);
 
     console.log(selectedItems);
     
-
     items.forEach(function(pizza){
         let nameItem = pizza.querySelector(`.content h3`).innerText;
         pizza.querySelector(`.action input`).value = 0;
         pizza.querySelector(`.action button`).removeAttribute(`disabled`);
         pizza.querySelector(`.action button`).innerText = `Add`;
-        console.log(nameItem)
+        //console.log(nameItem)
     });
     while(container.hasChildNodes()){
         container.removeChild(container.firstChild);
     }
-
 }
