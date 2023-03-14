@@ -1,7 +1,11 @@
 {
     "items": [
-                {"name": "Product 1", "price": 10, "quantity": 1, "stock": 10, "imageURL": "imgs/nikeBag.png"},
-                {"name": "Product 2", "price": 20, "quantity": 2, "stock": 20, "imageURL": "imgs/nikeBag.png"},
-                {"name": "Product 3", "price": 50, "quantity": 3, "stock": 30, "imageURL": "imgs/nikeBag.png"}
+                {"name": "Product 1", "price": 10, "quantity": 0, "stock": 10, "imageURL": "imgs/nikeBag.png"},
+                {"name": "Product 2", "price": 20, "quantity": 0, "stock": 10, "imageURL": "imgs/nikeBag.png"},
+                {"name": "Product 3", "price": 50, "quantity": 0, "stock": 10, "imageURL": "imgs/nikeBag.png"},
+                {"name": "Product 4", "price": 70, "quantity": 0, "stock": 10, "imageURL": "imgs/nikeBag.png"},
+                {"name": "Product 5", "price": 90, "quantity": 0, "stock": 10, "imageURL": "imgs/nikeBag.png"},
+                {"name": "Product 6", "price": 80, "quantity": 0, "stock": 10, "imageURL": "imgs/nikeBag.png"}
+
   ]
 }
