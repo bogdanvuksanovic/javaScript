@@ -6,6 +6,7 @@
   
   body {
     background-color: #f7f7f7;
+    padding: 50px;
   }
 
   .items{
@@ -49,5 +50,10 @@
   tr:last-child td:last-child {
     font-weight: bold;
     color: #f00;
+  }
+
+  img{
+    width: 100px;
+    height: 100px;
   }
   

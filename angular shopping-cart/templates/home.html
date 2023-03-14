@@ -1,1 +1,5 @@
-aa
+<h1>HOME PAGE</h1>
+<h2>Products</h2>
+<ul>
+	<li ng-repeat="product in vm.items"><img src="{{product.imageURL}}" alt="">{{product.name}} - {{product.price}} <button ng-click="addToCart(product)"></button></li>
+</ul>
