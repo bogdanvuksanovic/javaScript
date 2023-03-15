@@ -1,5 +1,19 @@
 <h1>HOME PAGE</h1>
 <h2>Products</h2>
-<ul>
+<!-- <ul>
 	<li ng-repeat="product in vm.items"><img src="{{product.imageURL}}" alt="">{{product.name}} - {{product.price}} <button ng-click="addToCart(product)"></button></li>
-</ul>
+</ul> -->
+<div class="boxes">
+	<div class="col" ng-repeat="product in vm.items">
+		<img src="{{product.imageURL}}" alt="">
+		<h4>{{product.name}}</h4>
+		<div class="description">
+			<div class="nameAndPrice">
+				<p>Price: ${{product.price}}</p>
+			</div>
+		<div class="button">
+			<button>Add To Cart</button>
+		</div>
+	</div>
+</div>
+</div>
