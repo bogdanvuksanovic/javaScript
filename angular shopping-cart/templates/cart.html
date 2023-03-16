@@ -16,7 +16,7 @@
         <td><input type="number" ng-model="item.quantity" min="0" max="{{ item.stock }}" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
       </tr> -->
-      <tr ng-repeat="item in vm.cartItems">
+      <tr ng-repeat="item in vm.cart">
         <td><img src="{{ item.imageURL }}" alt="Picture of the {{ item.imageURL }}"></td>
         <td>{{ item.name }}</td>
         <td>${{ item.price }}</td>

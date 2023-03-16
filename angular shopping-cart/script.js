@@ -34,25 +34,67 @@ angular
                     // Check if product is already in cart
                     var cartItemIndex = vm.cartItems.findIndex(function(item) {
                         return item.product.name === product.name;
+                        //return item.product.id === product.id
                     });
+
+            
              
                     if (cartItemIndex === -1) {
                         // Add new cart item
-                        vm.cartItems.push({
-                            product: product
-                        });
+                        var tempProduct = {
+                            id: product.id,
+                            name: product.name,
+                            price: product.price,
+                            quantity: product.quantity,
+                            stock: product.stock,
+                            imageURL: product.imageURL
+                          }
+                          
+                        vm.cartItems.push(
+                            tempProduct
+                        );
+                        console.log(vm.cartItems)
+                        
+                                $http.post('http://localhost:3000/cart', vm.cartItems)
+                                //vm.cartItems = [];
                     } else {
                         // Increase quantity of existing cart item
                         vm.cartItems[cartItemIndex].product.quantity++;
                     }
-
-                    console.log(vm.cartItems)
+                    //console.log(vm.c)
+                    //console.log(vm.cartItems)
                 };
+                
+                // this.buyOrder = function() {
+                //     var orderProducts = [];
+                //     // Create array of products with relevant details for order
+                //     angular.forEach(vm.cart, function(product) {
+                //       orderProducts.push({
+                //         id: product.id,
+                //         name: product.name,
+                //         price: product.price,
+                //         quantity: product.quantity
+                //       });
+                //     });
+                //     // Add total to order object
+                //     var order = {
+                //       products: orderProducts,
+                //       total: vm.cartTotal()
+                //     };
+                //     $http.post('http://localhost:3000/orders', order)
+                //       .then(function(response){
+                //         alert('Order successful!');
+                //       });
+                //     // Clear cart after order is placed
+                //     this.cart = [];
+                //   };
+            
+            
 
 
                 vm.cartTotal = function() {
                     var totalPrice = 0;
-                    angular.forEach(vm.items, function(item) {
+                    angular.forEach(vm.cartItems, function(item) {
                         totalPrice += item.price * item.quantity;
                     });
                     console.log(totalPrice)
@@ -62,12 +104,12 @@ angular
 
                 vm.clearCart = function(){
                     vm.cartItems = 0;
-                    //vm.cartTotal();
+                    vm.cartTotal();
                 }
 
-                vm.removeItem = function(item) {
-                    var index = vm.cart.indexOf(item);
-                    vm.cart.splice(index, 1);
+                vm.removeItem = function(itemId) {
+                    const itemIndex = vm.cartItems.findIndex(item => item.id === itemId);
+                        vm.cartItems.splice(itemIndex, 1);
                   };
     
                 vm.updateCart = function() {
@@ -97,7 +139,7 @@ angular
         
         function itemsController($http){
             var vm = this;
-            $http.get("http://localhost:3000/items")
+            $http.get("http://localhost:3000/cart")
                 .then(function(response){
                   vm.items = response.data;
                 });
