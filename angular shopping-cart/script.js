@@ -15,10 +15,24 @@ angular
                   controller:"itemsController",
                   controllerAs:"vm"
               })
+              .state("productSearch", {
+                url: "/productSearch/",
+                templateUrl: "./templates/productSearch.html",
+                controller: "productSearchController",
+                controllerAs: "vm"
+              })
+              .state("productDetails", {
+                url: "/productDetails/:id",
+                templateUrl: "./templates/productDetails.html",
+                controller: "productDetailsController",
+                controllerAs: "vm"
+              })
               $locationProvider.html5Mode(true);
         })
         .controller("homeController", homeController)
         .controller("itemsController", itemsController)
+        .controller("productDetailsController", productDetailsController)
+        //.controller("productSearch", productSearchController)
         function homeController($http){
             var vm = this;
             $http.get("http://localhost:3000/items")
@@ -33,16 +47,20 @@ angular
                     }
                     // Check if product is already in cart
                     var cartItemIndex = vm.cartItems.findIndex(function(item) {
-                        return item.product.name === product.name;
-                        //return item.product.id === product.id
+                        //return item.product.name === product.name;
+                        console.log(item.product)
+                        console.log(item);
+                        //console.log(product)
+                        return item.productID === product.id
                     });
 
             
              
                     if (cartItemIndex === -1) {
                         // Add new cart item
+                        if (product.id !== undefined && product.id !== null) { 
                         var tempProduct = {
-                            id: product.id,
+                            productID: product.id,
                             name: product.name,
                             price: product.price,
                             quantity: product.quantity,
@@ -57,9 +75,13 @@ angular
                         
                                 $http.post('http://localhost:3000/cart', vm.cartItems)
                                 //vm.cartItems = [];
+                        } else {
+                            console.log('Error: product id is undefined or null');
+                            // handle the error here
+                        }
                     } else {
                         // Increase quantity of existing cart item
-                        vm.cartItems[cartItemIndex].product.quantity++;
+                        vm.cartItems[cartItemIndex].quantity++;
                     }
                     //console.log(vm.c)
                     //console.log(vm.cartItems)
@@ -143,6 +165,7 @@ angular
                 .then(function(response){
                   vm.items = response.data;
                 });
+                console.log(vm.items)
             // vm.cartTotal = function() {
             //     var totalPrice = 0;
             //     angular.forEach(vm.items, function(item) {
@@ -154,4 +177,19 @@ angular
             vm.updateCart = function() {
                 vm.cartTotal()
             };
+        }
+
+        //function productSearchController()
+
+        function productDetailsController($http, $stateParams){
+            var vm = this;
+            $http({
+                url: "http://localhost:3000/items",
+                params:{id:$stateParams.id},
+                method: "get"
+            })
+            .then(function(response){
+                vm.item = response.data[0];
+                console.log(response)
+            })
         }

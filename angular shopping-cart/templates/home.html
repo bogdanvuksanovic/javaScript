@@ -3,15 +3,17 @@
 <!-- <ul>
 	<li ng-repeat="product in vm.items"><img src="{{product.imageURL}}" alt="">{{product.name}} - {{product.price}} <button ng-click="addToCart(product)"></button></li>
 </ul> -->
+Product: <input type="text" ng-model="vm.name">
+<button ng-click="vm.searchItem()">Search</button>
 <div class="boxes">
 	<div class="col" ng-repeat="product in vm.items">
-		<img src="{{product.imageURL}}" alt="">
-		<h4>{{product.name}}</h4>
+		<img src="{{product.imageURL}}" alt="{{product.imageURL}}" ui-sref="productDetails({id:product.id})">
+		<h4 ui-sref="productDetails({id:product.id})">{{product.name}}</h4>
 		<div class="description">
 			<div class="nameAndPrice">
 				<p>Price: ${{product.price}}</p>
 			</div>
-		<div class="button">
+		<div class="addToCart">
 			<button ng-click="vm.addToCart(product)">Add To Cart</button>
 		</div>
 	</div>
@@ -39,7 +41,7 @@
         <td><img src="{{ item.imageURL }}" alt=""></td>
         <td>{{ item.name }}</td>
         <td>${{ item.price }}</td>
-        <td><input type="number" ng-model="item.quantity" min="0" max="{{ item.stock }}" ng-change="vm.updateCart()"></td>
+        <td><input type="number" ng-model="item.quantity" min="1" max="{{ item.stock }}" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
 		<td><button ng-click="vm.removeItem(item)">Remove Item</button></td>
       </tr>
