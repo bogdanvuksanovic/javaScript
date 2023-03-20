@@ -16,7 +16,7 @@ angular
                   controllerAs:"vm"
               })
               .state("productSearch", {
-                url: "/productSearch/",
+                url: "/productSearch/:name",
                 templateUrl: "./templates/productSearch.html",
                 controller: "productSearchController",
                 controllerAs: "vm"
@@ -32,15 +32,27 @@ angular
         .controller("homeController", homeController)
         .controller("itemsController", itemsController)
         .controller("productDetailsController", productDetailsController)
-        //.controller("productSearch", productSearchController)
-        function homeController($http){
+        .controller("productSearchController", productSearchController)
+
+        function homeController($http, $state){
             var vm = this;
+            vm.cartItems = [];
+            vm.cartIsOpen = false;
+            
+
             $http.get("http://localhost:3000/items")
                  .then(function(response){
                     vm.items = response.data;
                  })
+                    
+                 vm.searchItem = function(){
+                    if(vm.name){
+                        $state.go("productSearch", {name: vm.name})}
+                    else{
+                        $state.go("home")
+                    }
+                }
 
-                vm.cartItems = [];
                 vm.addToCart = function(product) {
                     if (!Array.isArray(vm.cartItems)) {
                         vm.cartItems = [];
@@ -59,22 +71,19 @@ angular
                     if (cartItemIndex === -1) {
                         // Add new cart item
                         if (product.id !== undefined && product.id !== null) { 
-                        var tempProduct = {
-                            productID: product.id,
-                            name: product.name,
-                            price: product.price,
-                            quantity: product.quantity,
-                            stock: product.stock,
-                            imageURL: product.imageURL
+                            var tempProduct = {
+                                productID: product.id,
+                                name: product.name,
+                                price: product.price,
+                                quantity: product.quantity,
+                                stock: product.stock,
+                                imageURL: product.imageURL
                           }
                           
-                        vm.cartItems.push(
-                            tempProduct
-                        );
-                        console.log(vm.cartItems)
-                        
-                                $http.post('http://localhost:3000/cart', vm.cartItems)
-                                //vm.cartItems = [];
+                            vm.cartItems.push(tempProduct);
+                            console.log(vm.cartItems)
+                               $http.post('http://localhost:3000/cart', vm.cartItems)
+                                    //vm.cartItems = [];
                         } else {
                             console.log('Error: product id is undefined or null');
                             // handle the error here
@@ -192,4 +201,18 @@ angular
                 vm.item = response.data[0];
                 console.log(response)
             })
+        }
+
+        function productSearchController($http, $stateParams){
+            var vm = this;
+
+            if($stateParams.name){
+                $http({
+                    url:"http://localhost:3000/items?name_like=" + $stateParams.name,
+                    method:"get"
+                })
+                .then(function(response){
+                    vm.items = response.data
+                })
+            }
         }

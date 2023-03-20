@@ -104,3 +104,11 @@
   .nameAndPrice{
     padding-top: 5px;
   }
+
+  .allPage{
+    display: flex;
+  }
+
+  .searchInput{
+    align-items: right;
+  }
