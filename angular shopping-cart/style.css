@@ -7,6 +7,11 @@
   body {
     background-color: #f7f7f7;
     padding: 50px;
+    margin: 50px;
+  }
+
+  h1{
+    text-align: center;
   }
 
   .items{
@@ -16,6 +21,7 @@
   h2, th, td, input {
     font-family: Arial, sans-serif;
     font-size: 14px;
+    text-align: center;
   }
   
   th, td {
@@ -110,5 +116,20 @@
   }
 
   .searchInput{
-    align-items: right;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
+
+  .searchInput button {
+    height: 33px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    width: 50px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .clearCart button{
+    color:#f00
   }

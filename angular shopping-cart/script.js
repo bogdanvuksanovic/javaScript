@@ -70,7 +70,7 @@ angular
              
                     if (cartItemIndex === -1) {
                         // Add new cart item
-                        if (product.id !== undefined && product.id !== null) { 
+                        //if (product.id !== undefined && product.id !== null) { 
                             var tempProduct = {
                                 productID: product.id,
                                 name: product.name,
@@ -82,12 +82,12 @@ angular
                           
                             vm.cartItems.push(tempProduct);
                             console.log(vm.cartItems)
-                               $http.post('http://localhost:3000/cart', vm.cartItems)
+                               //$http.post('http://localhost:3000/cart', vm.cartItems)
                                     //vm.cartItems = [];
-                        } else {
+                        //} else {
                             console.log('Error: product id is undefined or null');
                             // handle the error here
-                        }
+                        //}
                     } else {
                         // Increase quantity of existing cart item
                         vm.cartItems[cartItemIndex].quantity++;
@@ -146,6 +146,29 @@ angular
                 vm.updateCart = function() {
                     vm.cartTotal()
                 };
+
+                vm.completeOrder = function() {
+                    if (!Array.isArray(vm.cartItems)) {
+                        vm.cartItems = [];
+                    }
+                    vm.tempProduct = [];
+                    //if (product.id !== undefined && product.id !== null) { 
+                        angular.forEach(vm.cartItems, function(product){
+                        tempProduct = {
+                            productID: product.id,
+                            name: product.name,
+                            price: product.price,
+                            quantity: product.quantity,
+                            stock: product.stock,
+                            imageURL: product.imageURL
+                        }
+                    })
+                        vm.cartItems.push(tempProduct);
+                        console.log(vm.cartItems)
+                        $http.post('http://localhost:3000/cart', vm.cartItems);
+                        vm.cartItems = [];
+                    //}
+                }
         }
 
         // .controller("itemsController", function($http, $state) {
