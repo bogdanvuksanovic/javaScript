@@ -57,20 +57,15 @@ angular
                     if (!Array.isArray(vm.cartItems)) {
                         vm.cartItems = [];
                     }
-                    // Check if product is already in cart
                     var cartItemIndex = vm.cartItems.findIndex(function(item) {
-                        //return item.product.name === product.name;
                         console.log(item.product)
                         console.log(item);
-                        //console.log(product)
                         return item.productID === product.id
                     });
 
             
              
                     if (cartItemIndex === -1) {
-                        // Add new cart item
-                        //if (product.id !== undefined && product.id !== null) { 
                             var tempProduct = {
                                 productID: product.id,
                                 name: product.name,
@@ -82,46 +77,10 @@ angular
                           
                             vm.cartItems.push(tempProduct);
                             console.log(vm.cartItems)
-                               //$http.post('http://localhost:3000/cart', vm.cartItems)
-                                    //vm.cartItems = [];
-                        //} else {
-                            console.log('Error: product id is undefined or null');
-                            // handle the error here
-                        //}
                     } else {
-                        // Increase quantity of existing cart item
                         vm.cartItems[cartItemIndex].quantity++;
                     }
-                    //console.log(vm.c)
-                    //console.log(vm.cartItems)
                 };
-                
-                // this.buyOrder = function() {
-                //     var orderProducts = [];
-                //     // Create array of products with relevant details for order
-                //     angular.forEach(vm.cart, function(product) {
-                //       orderProducts.push({
-                //         id: product.id,
-                //         name: product.name,
-                //         price: product.price,
-                //         quantity: product.quantity
-                //       });
-                //     });
-                //     // Add total to order object
-                //     var order = {
-                //       products: orderProducts,
-                //       total: vm.cartTotal()
-                //     };
-                //     $http.post('http://localhost:3000/orders', order)
-                //       .then(function(response){
-                //         alert('Order successful!');
-                //       });
-                //     // Clear cart after order is placed
-                //     this.cart = [];
-                //   };
-            
-            
-
 
                 vm.cartTotal = function() {
                     var totalPrice = 0;
@@ -152,7 +111,6 @@ angular
                         vm.cartItems = [];
                     }
                     vm.tempProduct = [];
-                    //if (product.id !== undefined && product.id !== null) { 
                         angular.forEach(vm.cartItems, function(product){
                         tempProduct = {
                             productID: product.id,
@@ -167,30 +125,9 @@ angular
                         console.log(vm.cartItems)
                         $http.post('http://localhost:3000/cart', vm.cartItems);
                         vm.cartItems = [];
-                    //}
                 }
         }
-
-        // .controller("itemsController", function($http, $state) {
-        //     var vm = this;
-        //     $http.get("http://localhost:3000/items")
-        //         .then(function(response){
-        //           vm.items = response.data;
-        //         });
-        //     vm.cartTotal = function() {
-        //         var totalPrice = 0;
-        //         angular.forEach(vm.items, function(item) {
-        //             totalPrice += item.price * item.quantity;
-        //         });
-        //         return totalPrice;
-        //     };
-
-        //     vm.updateCart = function() {
-        //         vm.cartTotal()
-        //     };
-        // })
-        
-        
+               
         function itemsController($http){
             var vm = this;
             $http.get("http://localhost:3000/cart")
@@ -198,20 +135,11 @@ angular
                   vm.items = response.data;
                 });
                 console.log(vm.items)
-            // vm.cartTotal = function() {
-            //     var totalPrice = 0;
-            //     angular.forEach(vm.items, function(item) {
-            //         totalPrice += item.price * item.quantity;
-            //     });
-            //     return totalPrice;
-            // };
 
             vm.updateCart = function() {
                 vm.cartTotal()
             };
         }
-
-        //function productSearchController()
 
         function productDetailsController($http, $stateParams){
             var vm = this;

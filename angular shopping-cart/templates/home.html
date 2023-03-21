@@ -21,7 +21,9 @@
 	</div>
 </div>
 </div>
-<button ng-click="showCart = !showCart"><i class="bi bi-basket3-fill"></i></button>
+<div class="showAndHide">
+  <button ng-click="showCart = !showCart"><i class="bi bi-basket3-fill"></i></button>
+</div>
 <div class="items" ng-show="showCart">
     <h2>Basket</h2>
     <table>
@@ -38,14 +40,19 @@
         <td>${{ item.price }}</td>
         <td><input type="number" ng-model="item.quantity" min="1" max="{{ item.stock }}" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
-		<td><button ng-click="vm.removeItem(item)">Remove Item</button></td>
+		    <td><button ng-click="vm.removeItem(item)">Remove Item</button></td>
       </tr>
       <tr>
         <td></td>
+        <td></td>
         <td><b>Total:</b></td>
         <td>${{ vm.cartTotal() }}</td>
+        <td><button ng-click="vm.clearCart()" id="red-button">Clear Cart</button></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
         <td><button ng-click="vm.completeOrder()">Complete the Order</button></td>
-		    <td><button id="clearCart" ng-click="vm.clearCart()">Clear Cart</button></td>
       </tr>
     </table>
   </div>

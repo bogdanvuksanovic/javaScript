@@ -82,6 +82,140 @@
         "stock": 10,
         "imageURL": "imgs/nikeBag.png"
       }
+    ],
+    [
+      {
+        "productID": 3,
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 3,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 3,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      }
+    ],
+    [
+      {
+        "productID": 2,
+        "name": "Product 2",
+        "price": 20,
+        "quantity": 2,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "productID": 3,
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 5,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "productID": 4,
+        "name": "Product 4",
+        "price": 70,
+        "quantity": 1,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "name": "Product 4",
+        "price": 70,
+        "quantity": 1,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      }
+    ],
+    [
+      {
+        "productID": 2,
+        "name": "Product 2",
+        "price": 20,
+        "quantity": 2,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "name": "Product 2",
+        "price": 20,
+        "quantity": 2,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      }
+    ],
+    [
+      {
+        "productID": 2,
+        "name": "Product 2",
+        "price": 20,
+        "quantity": 1,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "productID": 3,
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 4,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 4,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      }
+    ],
+    [
+      {
+        "productID": 3,
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 9,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 9,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      }
+    ],
+    [
+      {
+        "productID": 3,
+        "name": "Product 3",
+        "price": 50,
+        "quantity": 1,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "productID": 2,
+        "name": "Product 2",
+        "price": 20,
+        "quantity": 2,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      },
+      {
+        "name": "Product 2",
+        "price": 20,
+        "quantity": 2,
+        "stock": 10,
+        "imageURL": "imgs/nikeBag.png"
+      }
     ]
   ]
 }
