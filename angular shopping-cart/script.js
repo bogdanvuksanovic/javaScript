@@ -34,7 +34,7 @@ angular
         .controller("productDetailsController", productDetailsController)
         .controller("productSearchController", productSearchController)
 
-        function homeController($http, $state){
+        function homeController($http, $state, $window){
             var vm = this;
             vm.cartItems = [];
             vm.cartIsOpen = false;
