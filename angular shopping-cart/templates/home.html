@@ -38,17 +38,19 @@
         <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
         <td>{{ item.name }}</td>
         <td>${{ item.price }}</td>
-        <td><input type="number" ng-model="item.quantity" min="1" max="{{ item.stock }}" ng-change="vm.updateCart()"></td>
+        <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
-		    <td><button ng-click="vm.removeItem(item)">Remove Item</button></td>
+		    <td  id="removeItem"><button ng-click="vm.removeItem(item)">Remove Item</button></td>
       </tr>
-      <tr>
+      <div id="red-button">
+      <tr >
         <td></td>
         <td></td>
         <td><b>Total:</b></td>
         <td>${{ vm.cartTotal() }}</td>
-        <td><button ng-click="vm.clearCart()" id="red-button">Clear Cart</button></td>
+        <td><button ng-click="vm.clearCart()">Clear Cart</button></td>
       </tr>
+    </div>
       <tr>
         <td></td>
         <td></td>

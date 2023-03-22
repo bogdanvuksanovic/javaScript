@@ -16,17 +16,29 @@
 
   .items{
     align-items: center;
+    width: 400px;
+    margin-right: 70px;
   }
   
-  h2, th, td, input {
+  .items h2, th, td, input {
     font-family: Arial, sans-serif;
     font-size: 14px;
     text-align: center;
   }
   
-  th, td {
+  .items th, td {
     padding: 10px;
   }
+
+  .items input{
+    width: 35px;
+    height: 35px;
+    text-align: center;
+  }
+
+  /* .items button{
+    width: 25px;
+  } */
   
   th {
     border-bottom: 1px solid #ccc;
@@ -139,7 +151,7 @@
     border-radius: 5px;
   }
 
-  .red-button{
+  .red-button td button{
     background-color: red;
     color: white;
   }
@@ -151,4 +163,6 @@
   .showAndHide button{
     height: 25px;
     width: 50px;
+    border: none;
+    border-radius: 3px;
   }
