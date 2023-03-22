@@ -16,7 +16,7 @@ angular
                   controllerAs:"vm"
               })
               .state("productSearch", {
-                url: "/productSearch/:name",
+                url: "/home/:name",
                 templateUrl: "./templates/productSearch.html",
                 controller: "productSearchController",
                 controllerAs: "vm"
@@ -45,12 +45,12 @@ angular
                     vm.items = response.data;
                  })
                     
-                 vm.searchItem = function(){
-                    if(vm.name){
-                        $state.go("productSearch", {name: vm.name})}
-                    else{
-                        $state.go("home")
-                    }
+                vm.searchItem = function(){
+                   if(vm.name){
+                       $state.go("productSearch", {name: vm.name})}
+                   else{
+                       $state.go("home")
+                   }
                 }
 
                 vm.addToCart = function(product) {
@@ -63,8 +63,6 @@ angular
                         return item.productID === product.id
                     });
 
-            
-             
                     if (cartItemIndex === -1) {
                             var tempProduct = {
                                 productID: product.id,
@@ -73,7 +71,7 @@ angular
                                 quantity: product.quantity,
                                 stock: product.stock,
                                 imageURL: product.imageURL
-                          }
+                            }
                           
                             vm.cartItems.push(tempProduct);
                             console.log(vm.cartItems)
@@ -110,21 +108,9 @@ angular
                     if (!Array.isArray(vm.cartItems)) {
                         vm.cartItems = [];
                     }
-                    vm.tempProduct = [];
-                        angular.forEach(vm.cartItems, function(product){
-                        tempProduct = {
-                            productID: product.id,
-                            name: product.name,
-                            price: product.price,
-                            quantity: product.quantity,
-                            stock: product.stock,
-                            imageURL: product.imageURL
-                        }
-                    })
-                        vm.cartItems.push(tempProduct);
-                        console.log(vm.cartItems)
-                        $http.post('http://localhost:3000/cart', vm.cartItems);
-                        vm.cartItems = [];
+                    console.log(vm.cartItems)
+                    $http.post('http://localhost:3000/cart', vm.cartItems);
+                    vm.cartItems = [];
                 }
         }
                
@@ -141,8 +127,10 @@ angular
             };
         }
 
-        function productDetailsController($http, $stateParams){
+        function productDetailsController($http, $stateParams, $window){
             var vm = this;
+            vm.cartItems = [];
+
             $http({
                 url: "http://localhost:3000/items",
                 params:{id:$stateParams.id},
@@ -152,7 +140,29 @@ angular
                 vm.item = response.data[0];
                 console.log(response)
             })
-        }
+
+            vm.addToCart = function(product) {
+                var cartItemIndex = vm.cartItems.findIndex(function(item) {
+                    return item.productID === product.id
+                });
+
+                if (cartItemIndex === -1) {
+                        var tempProduct = {
+                            productID: product.id,
+                            name: product.name,
+                            price: product.price,
+                            quantity: product.quantity,
+                            stock: product.stock,
+                            imageURL: product.imageURL
+                        }
+                        vm.cartItems.push(tempProduct);
+                } else {
+                    vm.cartItems[cartItemIndex].quantity++;
+                }
+                console.log(vm.cartItems)
+                $window.localStorage.setItem('cart', JSON.stringify(vm.cartItems));
+            };
+        };
 
         function productSearchController($http, $stateParams){
             var vm = this;
@@ -165,5 +175,5 @@ angular
                 .then(function(response){
                     vm.items = response.data
                 })
-            }
-        }
+            };
+        };
