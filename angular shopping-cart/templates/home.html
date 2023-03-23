@@ -2,7 +2,7 @@
 <div class="searchInput">
   <input type="text" ng-model="vm.name"  placeholder="Search">
   <button ng-click="vm.searchItem()"><i class="bi bi-search"></i></button>
-  <input type="text" ng-model="searchText" ng-change="search()">
+  <!-- <input type="text" ng-model="searchText" ng-change="search()"> -->
 
 </div>
 <div class="allPage">
@@ -39,7 +39,15 @@
         <td>${{ item.price }}</td>
         <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
-		    <td  id="removeItem"><button ng-click="vm.removeItem(item)">Remove Item</button></td>
+		    <td  id="removeItem"><button ng-click="vm.removeItem(item)" style="width: 40px; height: 40px;">Remove Item</button></td>
+      </tr>
+      <tr ng-repeat="item in vm.cart">
+        <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
+        <td>{{ item.name }}</td>
+        <td>${{ item.price }}</td>
+        <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
+        <td>{{ item.quantity * item.price }}</td>
+		    <td><button ng-click="vm.removeItem(item)" style="width: 40px; height: 40px;">Remove Item</button></td>
       </tr>
       <div id="red-button">
       <tr >
@@ -47,13 +55,13 @@
         <td></td>
         <td><b>Total:</b></td>
         <td>${{ vm.cartTotal() }}</td>
-        <td><button ng-click="vm.clearCart()">Clear Cart</button></td>
+        <td><button ng-click="vm.clearCart()" style="background-color: red; color: white;">Clear Cart</button></td>
       </tr>
     </div>
       <tr>
         <td></td>
         <td></td>
-        <td><button ng-click="vm.completeOrder()">Complete the Order</button></td>
+        <td><button ng-click="vm.completeOrder()" style="width: 90px; height: 40px;">Complete the Order</button></td>
       </tr>
     </table>
   </div>
