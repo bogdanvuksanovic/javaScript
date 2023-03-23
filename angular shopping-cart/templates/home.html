@@ -1,10 +1,9 @@
 <h1>HOME PAGE</h1>
-<!-- <ul>
-	<li ng-repeat="product in vm.items"><img src="{{product.imageURL}}" alt="">{{product.name}} - {{product.price}} <button ng-click="addToCart(product)"></button></li>
-</ul> -->
 <div class="searchInput">
-  <input type="text" ng-model="vm.name" placeholder="Search">
+  <input type="text" ng-model="vm.name"  placeholder="Search">
   <button ng-click="vm.searchItem()"><i class="bi bi-search"></i></button>
+  <input type="text" ng-model="searchText" ng-change="search()">
+
 </div>
 <div class="allPage">
 <div class="boxes">
