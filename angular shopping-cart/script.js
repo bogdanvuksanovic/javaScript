@@ -35,9 +35,9 @@ angular
         .controller("productSearchController", productSearchController)
         
 
-        function homeController($http, $state, $window){
+        function homeController($http, $state, $window, $stateParams){
             var vm = this;
-            vm.cartItems = [];
+            vm.cart = [];
             vm.cartIsOpen = false;
             
 
@@ -46,7 +46,7 @@ angular
                     vm.items = response.data;
                  })
 
-                 $http.get("http://localhost:3000/cart")
+            $http.get("http://localhost:3000/cart")
                  .then(function(response){
                     vm.cart = response.data;
                  })
@@ -60,10 +60,10 @@ angular
                 }
 
                 vm.addToCart = function(product) {
-                    if (!Array.isArray(vm.cartItems)) {
-                        vm.cartItems = [];
+                    if (!Array.isArray(vm.cart)) {
+                        vm.cart = [];
                     }
-                    var cartItemIndex = vm.cartItems.findIndex(function(item) {
+                    var cartItemIndex = vm.cart.findIndex(function(item) {
                         console.log(item.product)
                         console.log(item);
                         return item.productID === product.id
@@ -75,49 +75,16 @@ angular
                                 name: product.name,
                                 price: product.price,
                                 quantity: product.quantity,
-                                stock: product.stock,
                                 imageURL: product.imageURL
                             }
                           
-                            vm.cartItems.push(tempProduct);
-                            console.log(vm.cartItems)
+                            vm.cart.push(tempProduct);
+                            console.log(vm.cart)
                     } else {
-                        vm.cartItems[cartItemIndex].quantity++;
+                        vm.cart[cartItemIndex].quantity++;
                     }
-                    //$http.post('http://localhost:3000/cart', vm.cartItems);
+                    $http.post('http://localhost:3000/cart', vm.cart);
                 };
-
-                // vm.addToCart = function(product) {
-                //     if (!Array.isArray(vm.cartItems)) {
-                //         vm.cartItems = [];
-                //     }
-                //     var cartItemIndex = vm.cartItems.findIndex(function(item) {
-                //         console.log(item.product)
-                //         console.log(item);
-                //         return item.productID === product.id
-                //     });
-                
-                //     if (cartItemIndex === -1) {
-                //         var itemFromStorage = localStorage.getItem('cart');
-                //         var tempProduct;
-                //             vm.cartItems = JSON.parse(itemFromStorage);
-                //             console.log(tempProduct); 
-                //             tempProduct = {
-                //                 productID: product.id,
-                //                 name: product.name,
-                //                 price: product.price,
-                //                 quantity: product.quantity,
-                //                 imageURL: product.imageURL
-                //             };
-                        
-                //         vm.cartItems.push(tempProduct);
-                //         console.log(vm.cartItems);
-                
-                //         localStorage.setItem('cart', JSON.stringify(vm.cartItems));
-                //     } else {
-                //         vm.cartItems[cartItemIndex].quantity++;
-                //     }
-                // };
 
                 vm.cartTotal = function() {
                     var totalPrice = 0;
@@ -130,28 +97,26 @@ angular
                 console.log(vm.cartTotal())
 
                 vm.clearCart = function(){
-                    $http.post('http://localhost:3000/cart', vm.cartItems);
-                    vm.cartItems = [];
+                    vm.cart = [];
                     vm.cartTotal();
+                    $http.post('http://localhost:3000/cart', vm.cart);
                 }
 
                 vm.removeItem = function(itemId) {
-                    const itemIndex = vm.cartItems.findIndex(item => item.id === itemId);
-                    $http.post('http://localhost:3000/cart', vm.cartItems);
-                        vm.cartItems.splice(itemIndex, 1);
-                  };
+                    const itemIndex = vm.cart.findIndex(cart => cart.id === itemId);
+                    vm.cart.splice(itemIndex, 1);
+                    //$http.post('http://localhost:3000/cart', vm.cart);
+                    $http.delete('http://localhost:3000/cart/?id=' + itemId)
+                }
     
                 vm.updateCart = function() {
                     vm.cartTotal()
                 };
 
                 vm.completeOrder = function() {
-                    if (!Array.isArray(vm.cartItems)) {
-                        vm.cartItems = [];
-                    }
-                    console.log(vm.cartItems)
-                    $http.post('http://localhost:3000/cart', vm.cartItems);
-                    vm.cartItems = [];
+                    console.log(vm.cart)
+                    vm.cart = [];
+                    $http.post('http://localhost:3000/cart', vm.cart);
                 }
         }
                
@@ -170,7 +135,7 @@ angular
 
         function productDetailsController($http, $stateParams, $window){
             var vm = this;
-            vm.cartItems = [];
+            vm.cart = [];
 
             $http({
                 url: "http://localhost:3000/items",
@@ -178,17 +143,13 @@ angular
                 method: "get"
             })
 
-            
             .then(function(response){
                 vm.item = response.data[0];
                 console.log(response)
             })
 
-
-
-
             vm.addToCart = function(product) {
-                var cartItemIndex = vm.cartItems.findIndex(function(item) {
+                var cartItemIndex = vm.cart.findIndex(function(item) {
                     return item.productID === product.id
                 });
 
@@ -198,16 +159,14 @@ angular
                             name: product.name,
                             price: product.price,
                             quantity: product.quantity,
-                            stock: product.stock,
                             imageURL: product.imageURL
                         }
-                        vm.cartItems.push(tempProduct);
+                        vm.cart.push(tempProduct);
                 } else {
-                    vm.cartItems[cartItemIndex].quantity++;
+                    vm.cart[cartItemIndex].quantity++;
                 }
-                console.log(vm.cartItems)
-                $http.post('http://localhost:3000/cart', vm.cartItems);
-                //$window.localStorage.setItem('cart', JSON.stringify(vm.cartItems));
+                console.log(vm.cart)
+                $http.post('http://localhost:3000/cart', vm.cart);
             };
         };
 
