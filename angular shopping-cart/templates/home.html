@@ -33,14 +33,6 @@
         <th>Quantity</th>
         <th>Total</th>
       </tr>
-      <!-- <tr ng-repeat="item in vm.cartItems">
-        <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
-        <td>{{ item.name }}</td>
-        <td>${{ item.price }}</td>
-        <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
-        <td>{{ item.quantity * item.price }}</td>
-		    <td  id="removeItem"><button ng-click="vm.removeItem(item)" style="width: 40px; height: 40px;">Remove Item</button></td>
-      </tr> -->
       <tr ng-repeat="item in vm.cart">
         <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
         <td>{{ item.name }}</td>
