@@ -2,83 +2,86 @@
   "items": [
     {
       "id": 1,
-      "name": "Product 1",
-      "price": 10,
+      "name": "Los Angeles Lakers Association Edition 2022/23",
+      "description": "Nike Dri-FIT NBA Swingman Jersey",
+      "price": 100,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/t-shirt1.webp"
     },
     {
       "id": 2,
-      "name": "Product 2",
-      "price": 20,
+      "name": "Brooklyn Nets",
+      "description": "Men's Nike NBA T-Shirt",
+      "price": 33,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/t-shirt.webp"
     },
     {
       "id": 3,
-      "name": "Product 3",
-      "price": 50,
+      "name": "Nike Air Max Plus",
+      "description": "Men's Shoes",
+      "price": 190,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/shoes.jpeg"
     },
     {
       "id": 4,
-      "name": "Product 4",
-      "price": 70,
+      "name": "Nike Academy Team",
+      "description": "Football Hardcase Duffel Bag (Large, 59L)",
+      "price": 50,
       "quantity": 1,
       "stock": 10,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/bag.jpeg"
     },
     {
       "id": 5,
-      "name": "Product 5",
-      "price": 90,
+      "name": "Nike Zoom Mercurial Vapor 15 Pro TF",
+      "description": "Turf Football Shoes",
+      "price": 130,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/nikeShoes3.webp"
     },
     {
       "id": 6,
-      "name": "Product 6",
-      "price": 80,
+      "name": "Nike Zoom Superfly Elite 2",
+      "description": "Athletics Sprinting Spikes",
+      "price": 174,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/nikeShoes2.webp"
     },
     {
       "id": 7,
-      "name": "Product 7",
-      "price": 100,
+      "name": "Nike Air Force 1 '07",
+      "description": "Men's Shoe",
+      "price": 120,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/nikeShoes1.webp"
     },
     {
       "id": 8,
-      "name": "Product 8",
-      "price": 110,
+      "name": "Nike Air Force 1 '07",
+      "description": "Men's Shoe",
+      "price": 120,
       "quantity": 1,
-      "imageURL": "imgs/nikeBag.png"
+      "imageURL": "imgs/nikeShoes.webp"
     }
   ],
   "cart": [
     {
-      "productID": 3,
-      "name": "Product 3",
-      "price": 50,
-      "quantity": 5,
-      "imageURL": "imgs/nikeBag.png"
-    },
-    {
       "productID": 2,
-      "name": "Product 2",
-      "price": 20,
-      "quantity": 7,
-      "imageURL": "imgs/nikeBag.png"
+      "name": "Brooklyn Nets",
+      "price": 33,
+      "quantity": 1,
+      "imageURL": "imgs/t-shirt.webp",
+      "id": 1
     },
     {
-      "productID": 1,
-      "name": "Product 1",
-      "price": 10,
-      "quantity": 3,
-      "imageURL": "imgs/nikeBag.png"
+      "productID": 3,
+      "name": "Nike Air Max Plus",
+      "price": 190,
+      "quantity": 1,
+      "imageURL": "imgs/shoes.jpeg",
+      "id": 2
     }
   ]
 }

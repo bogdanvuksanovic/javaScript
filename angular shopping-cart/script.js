@@ -69,21 +69,56 @@ angular
                         return item.productID === product.id
                     });
 
-                    if (cartItemIndex === -1) {
-                            var tempProduct = {
-                                productID: product.id,
-                                name: product.name,
-                                price: product.price,
-                                quantity: product.quantity,
-                                imageURL: product.imageURL
-                            }
+                    // if (cartItemIndex === -1) {
+                    //         var tempProduct = {
+                    //             productID: product.id,
+                    //             name: product.name,
+                    //             price: product.price,
+                    //             quantity: product.quantity,
+                    //             imageURL: product.imageURL
+                    //         }
                           
-                            vm.cart.push(tempProduct);
-                            console.log(vm.cart)
+                            
+                    //         console.log(vm.cart)
+                    // } else {
+                    //     vm.cart[cartItemIndex].quantity++;
+                    // }
+                    // var t
+                    // $http.post('http://localhost:3000/cart', tempProduct)
+                    //     .then(function(response){
+                    //         //vm.cart.push(product);
+                    //         t = response.data.id
+                    //         console.log(vm.cart)
+                                                    
+                    //     var temp = {
+                    //         productID: product.id,
+                    //             name: product.name,
+                    //             price: product.price,
+                    //             quantity: product.quantity,
+                    //             imageURL: product.imageURL,
+                    //             id: t
+                    //     }
+                    //     vm.cart.push(temp);
+                    //     })
+
+                        console.log("ovo treba poslednje")
+                    if (cartItemIndex === -1) {
+                        var tempProduct = {
+                            productID: product.id,
+                            name: product.name,
+                            price: product.price,
+                            quantity: product.quantity, 
+                            imageURL: product.imageURL
+                        };
+                        $http.post('http://localhost:3000/cart', tempProduct)
+                            .then(function(response) {
+                                tempProduct.id = response.data.id;
+                                vm.cart.push(tempProduct); 
+                            });
                     } else {
                         vm.cart[cartItemIndex].quantity++;
                     }
-                    $http.post('http://localhost:3000/cart', vm.cart);
+                    
                 };
 
                 vm.cartTotal = function() {
@@ -104,9 +139,21 @@ angular
 
                 vm.removeItem = function(itemId) {
                     const itemIndex = vm.cart.findIndex(cart => cart.id === itemId);
-                    vm.cart.splice(itemIndex, 1);
                     //$http.post('http://localhost:3000/cart', vm.cart);
-                    $http.delete('http://localhost:3000/cart/?id=' + itemId)
+                    // $http.delete('http://localhost:3000/cart/?id=' + itemId)
+                    //     .then(function(response){
+                    //         vm.cart.splice(itemIndex, 1);
+                    //     }).catch(function(error) {
+                    //         console.error(error);
+                    //     });
+                        
+                        $http.delete('http://localhost:3000/cart/'+itemId)
+                            .then(function(response){
+                                //vm.cart = [];
+                                console.log("Successfully deleted")
+                            }).catch(function(error){
+                                console.log(error)
+                            })
                 }
     
                 vm.updateCart = function() {
@@ -115,9 +162,20 @@ angular
 
                 vm.completeOrder = function() {
                     console.log(vm.cart)
-                    vm.cart = [];
-                    $http.post('http://localhost:3000/cart', vm.cart);
-                }
+                     //vm.cart = [];
+                    angular.forEach(vm.cart, function(item) {
+                        console.log(item)
+                        console.log(item.id)
+                        $http.delete('http://localhost:3000/cart/'+item.id)
+                            .then(function(response){
+                                vm.cart = [];
+                                console.log("Successfully deleted")
+                            }).catch(function(error){
+                                console.log(error)
+                            })
+                    });
+
+                }                
         }
                
         function itemsController($http){
@@ -161,12 +219,16 @@ angular
                             quantity: product.quantity,
                             imageURL: product.imageURL
                         }
-                        vm.cart.push(tempProduct);
+                        $http.post('http://localhost:3000/cart', tempProduct)
+                            .then(function(response) {
+                                tempProduct.id = response.data.id;
+                                vm.cart.push(tempProduct); 
+                            });
                 } else {
                     vm.cart[cartItemIndex].quantity++;
                 }
                 console.log(vm.cart)
-                $http.post('http://localhost:3000/cart', vm.cart);
+                //$http.post('http://localhost:3000/cart', vm.cart);
             };
         };
 
