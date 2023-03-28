@@ -68,20 +68,12 @@
   ],
   "cart": [
     {
-      "productID": 2,
-      "name": "Brooklyn Nets",
-      "price": 33,
+      "productID": 5,
+      "name": "Nike Zoom Mercurial Vapor 15 Pro TF",
+      "price": 130,
       "quantity": 1,
-      "imageURL": "imgs/t-shirt.webp",
-      "id": 1
-    },
-    {
-      "productID": 3,
-      "name": "Nike Air Max Plus",
-      "price": 190,
-      "quantity": 1,
-      "imageURL": "imgs/shoes.jpeg",
-      "id": 2
+      "imageURL": "imgs/nikeShoes3.webp",
+      "id": 8
     }
   ]
 }

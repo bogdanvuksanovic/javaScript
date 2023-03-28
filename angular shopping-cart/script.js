@@ -33,13 +33,13 @@ angular
         .controller("itemsController", itemsController)
         .controller("productDetailsController", productDetailsController)
         .controller("productSearchController", productSearchController)
-        
+
 
         function homeController($http, $state, $window, $stateParams){
             var vm = this;
             vm.cart = [];
             vm.cartIsOpen = false;
-            
+
 
             $http.get("http://localhost:3000/items")
                  .then(function(response){
@@ -50,7 +50,7 @@ angular
                  .then(function(response){
                     vm.cart = response.data;
                  })
-                    
+
                 vm.searchItem = function(){
                    if(vm.name){
                        $state.go("productSearch", {name: vm.name})}
@@ -77,8 +77,8 @@ angular
                     //             quantity: product.quantity,
                     //             imageURL: product.imageURL
                     //         }
-                          
-                            
+
+
                     //         console.log(vm.cart)
                     // } else {
                     //     vm.cart[cartItemIndex].quantity++;
@@ -89,7 +89,7 @@ angular
                     //         //vm.cart.push(product);
                     //         t = response.data.id
                     //         console.log(vm.cart)
-                                                    
+
                     //     var temp = {
                     //         productID: product.id,
                     //             name: product.name,
@@ -107,18 +107,18 @@ angular
                             productID: product.id,
                             name: product.name,
                             price: product.price,
-                            quantity: product.quantity, 
+                            quantity: product.quantity,
                             imageURL: product.imageURL
                         };
                         $http.post('http://localhost:3000/cart', tempProduct)
                             .then(function(response) {
                                 tempProduct.id = response.data.id;
-                                vm.cart.push(tempProduct); 
+                                vm.cart.push(tempProduct);
                             });
                     } else {
                         vm.cart[cartItemIndex].quantity++;
                     }
-                    
+
                 };
 
                 vm.cartTotal = function() {
@@ -137,8 +137,8 @@ angular
                     $http.post('http://localhost:3000/cart', vm.cart);
                 }
 
-                vm.removeItem = function(itemId) {
-                    const itemIndex = vm.cart.findIndex(cart => cart.id === itemId);
+                vm.removeItem = function(items) {
+                    //const itemIndex = vm.cart.findIndex(cart => cart.id === itemId);
                     //$http.post('http://localhost:3000/cart', vm.cart);
                     // $http.delete('http://localhost:3000/cart/?id=' + itemId)
                     //     .then(function(response){
@@ -146,16 +146,32 @@ angular
                     //     }).catch(function(error) {
                     //         console.error(error);
                     //     });
+
+                        // $http.delete('http://localhost:3000/cart/'+itemId)
+                        //     .then(function(response){
+                        //         //vm.cart = [];
+                        //         console.log("Successfully deleted")
+                        //     }).catch(function(error){
+                        //         console.log(error)
+                        //     })
                         
-                        $http.delete('http://localhost:3000/cart/'+itemId)
-                            .then(function(response){
-                                //vm.cart = [];
-                                console.log("Successfully deleted")
-                            }).catch(function(error){
-                                console.log(error)
-                            })
+
+                            $http.delete('http://localhost:3000/cart/' + items.id)
+                              .then(function(response) {
+                                var index = vm.cart.findIndex(function(item) {
+                                  return item.id === items.id;
+                                });
+                                // Remove the item from the array
+                                vm.cart.splice(index, 1);
+                                console.log("Successfully deleted item with id:", items);
+                              })
+                              .catch(function(error) {
+                                console.log(error);
+                                console.log(items.id)
+                              });
+                          
                 }
-    
+
                 vm.updateCart = function() {
                     vm.cartTotal()
                 };
@@ -174,10 +190,9 @@ angular
                                 console.log(error)
                             })
                     });
-
-                }                
+                }
         }
-               
+
         function itemsController($http){
             var vm = this;
             $http.get("http://localhost:3000/cart")
@@ -222,7 +237,7 @@ angular
                         $http.post('http://localhost:3000/cart', tempProduct)
                             .then(function(response) {
                                 tempProduct.id = response.data.id;
-                                vm.cart.push(tempProduct); 
+                                vm.cart.push(tempProduct);
                             });
                 } else {
                     vm.cart[cartItemIndex].quantity++;
