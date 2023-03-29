@@ -110,14 +110,27 @@ angular
                             quantity: product.quantity,
                             imageURL: product.imageURL
                         };
-                        $http.post('http://localhost:3000/cart', tempProduct)
+                        var t;
+                            $http.post('http://localhost:3000/cart', tempProduct)
                             .then(function(response) {
-                                tempProduct.id = response.data.id;
-                                vm.cart.push(tempProduct);
+                                t = response.data.id;
+
+                                t = {
+                                    productID: product.id,
+                                    name: product.name,
+                                    price: product.price,
+                                    quantity: product.quantity,
+                                    imageURL: product.imageURL,
+                                    id: t
+                                }
+                                vm.cart.push(t);
+                                console.log(vm.cart)
                             });
+                            console.log(vm.cart)
                     } else {
                         vm.cart[cartItemIndex].quantity++;
                     }
+                    
 
                 };
 

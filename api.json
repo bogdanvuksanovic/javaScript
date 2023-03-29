@@ -66,14 +66,5 @@
       "imageURL": "imgs/nikeShoes.webp"
     }
   ],
-  "cart": [
-    {
-      "productID": 5,
-      "name": "Nike Zoom Mercurial Vapor 15 Pro TF",
-      "price": 130,
-      "quantity": 1,
-      "imageURL": "imgs/nikeShoes3.webp",
-      "id": 8
-    }
-  ]
+  "cart": []
 }
