@@ -1,4 +1,4 @@
-<div class="boxes">
+<!-- <div class="boxes">
     <div class="col" >
 		<img src="{{vm.item.imageURL}}" alt="{{vm.item.imageURL}}">
 		<h4>{{vm.item.name}}</h4>
@@ -11,4 +11,14 @@
 		</div>
 	</div>
     </div>
+</div> -->
+
+<div class="productDetails">
+	<img src="{{vm.item.imageURL}}" alt="{{vm.item.imageURL}}">
+	<div class="descriptionForProduct">
+		<h4>{{vm.item.name}}</h4>
+		<p>{{vm.item.description}}</p>
+		<p>Price: ${{vm.item.price}}</p>
+		<button ng-click="vm.addToCart(vm.item)">Add To Cart</button>
+	</div>
 </div>
