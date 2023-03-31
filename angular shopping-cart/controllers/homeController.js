@@ -100,7 +100,6 @@ function homeController($http, $state, $timeout) {
 		angular.forEach(vm.cart, function (item) {
 			totalPrice += item.price * item.quantity;
 		});
-		console.log(totalPrice);
 		return totalPrice;
 	};
 	console.log(vm.cartTotal());
@@ -134,25 +133,21 @@ function homeController($http, $state, $timeout) {
 	// };
 
 	vm.completeOrder = function () {
-		console.log(vm.cart);
 		//vm.cart = [];
-		angular.forEach(vm.cart, function (item) {
-			console.log(item);
-			console.log(item.id);
-			//for (var i = 0; i < 10; i++) {
+		// console.log(item);
+		// console.log(item.id);
+		for (let i = vm.cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
 				$http
-					.delete('http://localhost:3000/cart/' + item.id)
-					.then(function (response) {
-						vm.cart = [];
-						console.log('Successfully deleted');
-						console.log(item.id);
-					})
+					.delete('http://localhost:3000/cart/' + vm.cart[i].id)
+					.then(function (response) {})
 					.catch(function (error) {
 						console.log(error);
 					});
-			}, 500);
-			//}
-		});
+			}, 500 * i);
+		}
+		$timeout(function () {
+			vm.cart = [];
+		}, 500 * vm.cart.length + 500);
 	};
 }
