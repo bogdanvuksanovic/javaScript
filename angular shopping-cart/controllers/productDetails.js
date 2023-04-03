@@ -1,5 +1,7 @@
 angular.module('Demo').controller('productDetailsController', productDetailsController);
 
+productDetailsController.$inject = ['$http', '$stateParams'];
+
 function productDetailsController($http, $stateParams) {
 	var vm = this;
 	vm.cart = [];
@@ -26,11 +28,7 @@ function productDetailsController($http, $stateParams) {
 				quantity: product.quantity,
 				imageURL: product.imageURL
 			};
-			// $http.post('http://localhost:3000/cart', tempProduct)
-			//     .then(function(response) {
-			//         tempProduct.id = response.data.id;
-			//         vm.cart.push(tempProduct);
-			//     });
+
 			var t;
 			$http.post('http://localhost:3000/cart', tempProduct).then(function (response) {
 				t = response.data.id;
@@ -51,5 +49,6 @@ function productDetailsController($http, $stateParams) {
 			$http.put('http://localhost:3000/cart/' + vm.cart[cartItemIndex].id, vm.cart[cartItemIndex]).then(function (response) {});
 		}
 		console.log(vm.cart);
+		alert('Product is added!');
 	};
 }

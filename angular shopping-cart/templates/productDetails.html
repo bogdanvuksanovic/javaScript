@@ -1,24 +1,13 @@
-<!-- <div class="boxes">
-    <div class="col" >
-		<img src="{{vm.item.imageURL}}" alt="{{vm.item.imageURL}}">
-		<h4>{{vm.item.name}}</h4>
-		<div class="description">
-			<div class="nameAndPrice">
-				<p>Price: ${{vm.item.price}}</p>
-			</div>
-		<div class="addToCart">
-			<button ng-click="vm.addToCart(vm.item)">Add To Cart</button>
-		</div>
-	</div>
-    </div>
-</div> -->
-
 <div class="productDetails">
 	<img src="{{vm.item.imageURL}}" alt="{{vm.item.imageURL}}">
 	<div class="descriptionForProduct">
-		<h4>{{vm.item.name}}</h4>
-		<p>{{vm.item.description}}</p>
-		<p>Price: ${{vm.item.price}}</p>
-		<button ng-click="vm.addToCart(vm.item)">Add To Cart</button>
+		<h2>{{vm.item.name}}</h2>
+		<p class="desc">{{vm.item.description}}</p>
+		<div class="prodDetailsPrice">
+			<p>Price: ${{vm.item.price}}</p>
+			<button ng-click="vm.addToCart(vm.item)">Add To Cart</button>
+		</div>
 	</div>
 </div>
+
+<a ui-sref="home">Back to home page</a>

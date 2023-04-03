@@ -1,5 +1,7 @@
 angular.module('Demo').controller('homeController', homeController);
 
+homeController.$inject = ['$http', '$state', '$timeout'];
+
 function homeController($http, $state, $timeout) {
 	var vm = this;
 	vm.cart = [];
@@ -149,5 +151,6 @@ function homeController($http, $state, $timeout) {
 		$timeout(function () {
 			vm.cart = [];
 		}, 500 * vm.cart.length + 500);
+		alert('Your order is succesfuly completed!');
 	};
 }

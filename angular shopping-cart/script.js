@@ -1,5 +1,6 @@
 angular.module('Demo', ['ui.router']).config(function ($stateProvider, $urlMatcherFactoryProvider, $urlRouterProvider, $locationProvider) {
 	$urlRouterProvider.otherwise('/home');
+	$urlMatcherFactoryProvider.caseInsensitive(true);
 	$stateProvider
 		.state('home', {
 			url: '/home',
@@ -15,7 +16,7 @@ angular.module('Demo', ['ui.router']).config(function ($stateProvider, $urlMatch
 		})
 		.state('productSearch', {
 			url: '/home/:name',
-			templateUrl: './templates/productSearch.html',
+			templateUrl: './templates/home.html',
 			controller: 'productSearchController',
 			controllerAs: 'vm'
 		})

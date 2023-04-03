@@ -11,9 +11,7 @@
 		<img src="{{product.imageURL}}" alt="{{product.imageURL}}" ui-sref="productDetails({id:product.id})">
 		<h4 ui-sref="productDetails({id:product.id})">{{product.name}}</h4>
 		<div class="description">
-			<div class="nameAndPrice">
-				<p>Price: ${{product.price}}</p>
-			</div>
+				<p style="color: #626262;">Price: ${{product.price}}</p>
 		<div class="addToCart">
 			<button ng-click="vm.addToCart(product)">Add To Cart</button>
 		</div>
