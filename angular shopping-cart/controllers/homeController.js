@@ -6,6 +6,7 @@ function homeController($http, $state, $timeout) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
+	vm.isEmptyingBasket = false;
 
 	$http.get('http://localhost:3000/items').then(function (response) {
 		vm.items = response.data;
@@ -138,6 +139,7 @@ function homeController($http, $state, $timeout) {
 		//vm.cart = [];
 		// console.log(item);
 		// console.log(item.id);
+		vm.isEmptyingBasket = true;
 		for (let i = vm.cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
 				$http
@@ -150,6 +152,7 @@ function homeController($http, $state, $timeout) {
 		}
 		$timeout(function () {
 			vm.cart = [];
+			vm.isEmptyingBasket = false;
 		}, 500 * vm.cart.length + 500);
 		alert('Your order is succesfuly completed!');
 	};

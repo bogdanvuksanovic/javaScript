@@ -37,8 +37,11 @@
         <td>${{ item.price }}</td>
         <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
-		    <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>
+		    <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>     
       </tr>
+      <div class="emptying-basket" ng-show="vm.isEmptyingBasket">
+        <i class="fa fa-spinner fa-spin"></i> Emptying basket...
+      </div> 
       <div id="red-button">
       <tr >
         <td></td>

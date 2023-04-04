@@ -201,6 +201,11 @@
     border-style: none;
   }
 
+  .descriptionForProduct button:hover{
+    background-color: #494949;
+    color: white;
+  }
+
   .descriptionForProduct h2{
     color: black;
     padding-top: 50px;
@@ -234,4 +239,9 @@
 
   i{
     align-items: right;
+  }
+
+  .emptying-basket{
+    font-style: italic;
+    font-weight: bold;
   }
