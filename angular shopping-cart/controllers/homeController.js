@@ -129,11 +129,13 @@ function homeController($http, $state, $timeout) {
 			});
 	};
 
-	// vm.updateCart = function () {
-	// 	$http.put('http://localhost:3000/cart/' + vm.cart[cartItemIndex].id, vm.cart[cartItemIndex]).then(function (response) {
-	// 		console.log(vm.cart[cartItemIndex].id);
-	// 	});
-	// };
+	vm.cartTotalQuantity = function () {
+		var totalQuantity = 0;
+		angular.forEach(vm.cart, function (product) {
+			totalQuantity += product.quantity;
+		});
+		return totalQuantity;
+	};
 
 	vm.completeOrder = function () {
 		//vm.cart = [];
@@ -153,7 +155,7 @@ function homeController($http, $state, $timeout) {
 		$timeout(function () {
 			vm.cart = [];
 			vm.isEmptyingBasket = false;
+			alert('Your order is succesfuly completed!');
 		}, 500 * vm.cart.length + 500);
-		alert('Your order is succesfuly completed!');
 	};
 }
