@@ -33,38 +33,6 @@ function homeController($http, $state, $timeout) {
 			console.log(item);
 			return item.productID === product.id;
 		});
-
-		// if (cartItemIndex === -1) {
-		//         var tempProduct = {
-		//             productID: product.id,
-		//             name: product.name,
-		//             price: product.price,
-		//             quantity: product.quantity,
-		//             imageURL: product.imageURL
-		//         }
-
-		//         console.log(vm.cart)
-		// } else {
-		//     vm.cart[cartItemIndex].quantity++;
-		// }
-		// var t
-		// $http.post('http://localhost:3000/cart', tempProduct)
-		//     .then(function(response){
-		//         //vm.cart.push(product);
-		//         t = response.data.id
-		//         console.log(vm.cart)
-
-		//     var temp = {
-		//         productID: product.id,
-		//             name: product.name,
-		//             price: product.price,
-		//             quantity: product.quantity,
-		//             imageURL: product.imageURL,
-		//             id: t
-		//     }
-		//     vm.cart.push(temp);
-		//     })
-
 		console.log('ovo treba poslednje');
 		if (cartItemIndex === -1) {
 			var tempProduct = {
@@ -138,9 +106,6 @@ function homeController($http, $state, $timeout) {
 	};
 
 	vm.completeOrder = function () {
-		//vm.cart = [];
-		// console.log(item);
-		// console.log(item.id);
 		vm.isEmptyingBasket = true;
 		for (let i = vm.cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
@@ -155,7 +120,6 @@ function homeController($http, $state, $timeout) {
 		$timeout(function () {
 			vm.cart = [];
 			vm.isEmptyingBasket = false;
-			alert('Your order is succesfuly completed!');
 		}, 500 * vm.cart.length + 500);
 	};
 }
