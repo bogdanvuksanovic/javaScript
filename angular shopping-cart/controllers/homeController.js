@@ -1,8 +1,8 @@
 angular.module('Demo').controller('homeController', homeController);
 
-homeController.$inject = ['$http', '$state', '$timeout'];
+homeController.$inject = ['$http', '$state', '$timeout', 'cartService'];
 
-function homeController($http, $state, $timeout) {
+function homeController($http, $state, $timeout, cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
@@ -12,8 +12,12 @@ function homeController($http, $state, $timeout) {
 		vm.items = response.data;
 	});
 
-	$http.get('http://localhost:3000/cart').then(function (response) {
-		vm.cart = response.data;
+	// $http.get('http://localhost:3000/cart').then(function (response) {
+	// 	vm.cart = response.data;
+	// });
+
+	cartService.getCartData().then(function (response) {
+		vm.cart = response;
 	});
 
 	vm.searchItem = function () {
@@ -60,9 +64,10 @@ function homeController($http, $state, $timeout) {
 			console.log(vm.cart);
 		} else {
 			vm.cart[cartItemIndex].quantity++;
-			$http.put('http://localhost:3000/cart/' + vm.cart[cartItemIndex].id, vm.cart[cartItemIndex]).then(function (response) {
-				console.log(vm.cart[cartItemIndex].id);
-			});
+			// $http.put('http://localhost:3000/cart/' + vm.cart[cartItemIndex].id, vm.cart[cartItemIndex]).then(function (response) {
+			// 	console.log(vm.cart[cartItemIndex].id);
+			// });
+			cartService.updateCartItem(vm.cart[cartItemIndex]);
 		}
 	};
 
@@ -81,19 +86,20 @@ function homeController($http, $state, $timeout) {
 		$http.post('http://localhost:3000/cart', vm.cart);
 	};
 
-	vm.removeItem = function (items) {
-		$http
-			.delete('http://localhost:3000/cart/' + items.id)
+	vm.removeItem = function (product) {
+		$http;
+		cartService
+			.removeCartItem(product)
 			.then(function (response) {
 				var index = vm.cart.findIndex(function (item) {
-					return item.id === items.id;
+					return item.id === product.id;
 				});
 				vm.cart.splice(index, 1);
-				console.log('Successfully deleted item with id:', items);
+				console.log('Successfully deleted item with id:', product);
 			})
 			.catch(function (error) {
 				console.log(error);
-				console.log(items.id);
+				console.log(product.id);
 			});
 	};
 
@@ -109,17 +115,15 @@ function homeController($http, $state, $timeout) {
 		vm.isEmptyingBasket = true;
 		for (let i = vm.cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
-				$http
-					.delete('http://localhost:3000/cart/' + vm.cart[i].id)
-					.then(function (response) {})
-					.catch(function (error) {
-						console.log(error);
-					});
+				cartService.deleteCart(vm.cart[i].id);
 			}, 500 * i);
 		}
 		$timeout(function () {
 			vm.cart = [];
 			vm.isEmptyingBasket = false;
 		}, 500 * vm.cart.length + 500);
+		$timeout(function () {
+			alert('Succes');
+		}, 500 * vm.cart.length + 700);
 	};
 }
