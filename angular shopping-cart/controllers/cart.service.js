@@ -1,6 +1,8 @@
 angular.module('Demo').factory('cartService', cartService);
 
 function cartService($http) {
+	var vm = this;
+	vm.cartData = [];
 	var service = {
 		getCartData: function () {
 			return $http.get('http://localhost:3000/cart').then(function (response) {
@@ -18,7 +20,44 @@ function cartService($http) {
 				console.log(error);
 			});
 		},
-		addToCart: function (product) {}
+		addToCart: function (product) {
+			if (!Array.isArray(vm.cart)) {
+				vm.cart = [];
+			}
+			var cartItemIndex = vm.cart.findIndex(function (item) {
+				console.log(item);
+				return item.productID === product.id;
+			});
+			console.log('ovo treba poslednje');
+			if (cartItemIndex === -1) {
+				var tempProduct = {
+					productID: product.id,
+					name: product.name,
+					price: product.price,
+					quantity: product.quantity,
+					imageURL: product.imageURL
+				};
+				var t;
+				$http.post('http://localhost:3000/cart', tempProduct).then(function (response) {
+					t = response.data.id;
+
+					t = {
+						productID: product.id,
+						name: product.name,
+						price: product.price,
+						quantity: product.quantity,
+						imageURL: product.imageURL,
+						id: t
+					};
+					vm.cart.push(t);
+					console.log(vm.cart);
+				});
+			} else {
+				vm.cart[cartItemIndex].quantity++;
+				service.updateCartItem(vm.cart[cartItemIndex]);
+			}
+			console.log(vm.cart);
+		}
 	};
 
 	return service;
