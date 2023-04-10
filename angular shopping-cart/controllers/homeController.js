@@ -1,20 +1,16 @@
 angular.module('Demo').controller('homeController', homeController);
 
-homeController.$inject = ['$http', '$state', '$timeout', 'cartService'];
+homeController.$inject = ['$http', '$state', 'cartService'];
 
-function homeController($http, $state, $timeout, cartService) {
+function homeController($http, $state, cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
 
-	$http.get('http://localhost:3000/items').then(function (response) {
-		vm.items = response.data;
+	cartService.getProducts().then(function (response) {
+		vm.items = response;
 	});
-
-	// $http.get('http://localhost:3000/cart').then(function (response) {
-	// 	vm.cart = response.data;
-	// });
 
 	cartService.getCartData().then(function (response) {
 		vm.cart = response;
@@ -30,6 +26,9 @@ function homeController($http, $state, $timeout, cartService) {
 
 	vm.addToCart = function (product) {
 		cartService.addToCart(product);
+		cartService.getCartData().then(function (response) {
+			vm.cart = response;
+		});
 		console.log(vm.cart);
 	};
 
@@ -74,18 +73,6 @@ function homeController($http, $state, $timeout, cartService) {
 	};
 
 	vm.completeOrder = function () {
-		vm.isEmptyingBasket = true;
-		for (let i = vm.cart.length - 1; i >= 0; i--) {
-			$timeout(function () {
-				cartService.deleteCart(vm.cart[i].id);
-			}, 500 * i);
-		}
-		$timeout(function () {
-			vm.cart = [];
-			vm.isEmptyingBasket = false;
-		}, 500 * vm.cart.length + 500);
-		$timeout(function () {
-			alert('Succes');
-		}, 500 * vm.cart.length + 700);
+		cartService.completeOrder(vm.cart);
 	};
 }

@@ -1,9 +1,15 @@
 angular.module('Demo').factory('cartService', cartService);
 
-function cartService($http) {
+function cartService($http, $timeout) {
 	var vm = this;
-	vm.cartData = [];
+	vm.cart = [];
+	isEmptyingBasket = false;
 	var service = {
+		getProducts: function () {
+			return $http.get('http://localhost:3000/items').then(function (response) {
+				return response.data;
+			});
+		},
 		getCartData: function () {
 			return $http.get('http://localhost:3000/cart').then(function (response) {
 				return response.data;
@@ -20,6 +26,9 @@ function cartService($http) {
 				console.log(error);
 			});
 		},
+		saveCartData: function (cart) {
+			return $http.post('http://localhost:3000/cart', cart);
+		},
 		addToCart: function (product) {
 			if (!Array.isArray(vm.cart)) {
 				vm.cart = [];
@@ -28,7 +37,6 @@ function cartService($http) {
 				console.log(item);
 				return item.productID === product.id;
 			});
-			console.log('ovo treba poslednje');
 			if (cartItemIndex === -1) {
 				var tempProduct = {
 					productID: product.id,
@@ -38,7 +46,7 @@ function cartService($http) {
 					imageURL: product.imageURL
 				};
 				var t;
-				$http.post('http://localhost:3000/cart', tempProduct).then(function (response) {
+				service.saveCartData(tempProduct).then(function (response) {
 					t = response.data.id;
 
 					t = {
@@ -57,6 +65,21 @@ function cartService($http) {
 				service.updateCartItem(vm.cart[cartItemIndex]);
 			}
 			console.log(vm.cart);
+		},
+		completeOrder: function (cart) {
+			service.isEmptyingBasket = true;
+			for (let i = cart.length - 1; i >= 0; i--) {
+				$timeout(function () {
+					service.deleteCart(cart[i].id);
+				}, 500 * i);
+			}
+			$timeout(function () {
+				cart.length = [];
+				service.isEmptyingBasket = false;
+			}, 500 * cart.length + 500);
+			$timeout(function () {
+				alert('Succes');
+			}, 500 * cart.length + 700);
 		}
 	};
 
