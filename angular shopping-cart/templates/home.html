@@ -36,7 +36,7 @@
         <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
         <td>{{ item.name }}</td>
         <td>${{ item.price }}</td>
-        <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
+        <td><input type="number" ng-model="item.quantity" ng-change="vm.updateQuantity(item)" min="1" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
         <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>     
       </tr>

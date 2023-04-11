@@ -18,9 +18,9 @@ function productSearchController($http, $stateParams, $timeout, cartService) {
 		});
 	}
 
-	$http.get('http://localhost:3000/cart').then(function (response) {
-		vm.cart = response.data;
-	});
+	// $http.get('http://localhost:3000/cart').then(function (response) {
+	// 	vm.cart = response.data;
+	// });
 
 	vm.addToCart = function (product) {
 		// var cartItemIndex = vm.cart.findIndex(function (item) {

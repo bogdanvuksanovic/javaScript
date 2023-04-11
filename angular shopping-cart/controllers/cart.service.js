@@ -3,7 +3,6 @@ angular.module('Demo').factory('cartService', cartService);
 function cartService($http, $timeout) {
 	var vm = this;
 	vm.cart = [];
-	isEmptyingBasket = false;
 	var service = {
 		getProducts: function () {
 			return $http.get('http://localhost:3000/items').then(function (response) {
@@ -29,11 +28,11 @@ function cartService($http, $timeout) {
 		saveCartData: function (cart) {
 			return $http.post('http://localhost:3000/cart', cart);
 		},
-		addToCart: function (product) {
+		addToCart: function (product, cart) {
 			if (!Array.isArray(vm.cart)) {
-				vm.cart = [];
+				cart = [];
 			}
-			var cartItemIndex = vm.cart.findIndex(function (item) {
+			var cartItemIndex = cart.findIndex(function (item) {
 				console.log(item);
 				return item.productID === product.id;
 			});
@@ -57,17 +56,16 @@ function cartService($http, $timeout) {
 						imageURL: product.imageURL,
 						id: t
 					};
-					vm.cart.push(t);
-					console.log(vm.cart);
+					cart.push(t);
+					console.log(cart);
 				});
 			} else {
-				vm.cart[cartItemIndex].quantity++;
-				service.updateCartItem(vm.cart[cartItemIndex]);
+				cart[cartItemIndex].quantity++;
+				service.updateCartItem(cart[cartItemIndex]);
 			}
 			console.log(vm.cart);
 		},
-		completeOrder: function (cart) {
-			service.isEmptyingBasket = true;
+		clearCart: function (cart) {
 			for (let i = cart.length - 1; i >= 0; i--) {
 				$timeout(function () {
 					service.deleteCart(cart[i].id);
@@ -75,11 +73,41 @@ function cartService($http, $timeout) {
 			}
 			$timeout(function () {
 				cart.length = [];
-				service.isEmptyingBasket = false;
+			}, 500 * cart.length + 500);
+			$timeout(function () {
+				alert('Your order is deleted');
+			}, 500 * cart.length + 700);
+		},
+		completeOrder: function (cart, boolean) {
+			boolean = true;
+			for (let i = cart.length - 1; i >= 0; i--) {
+				$timeout(function () {
+					service.deleteCart(cart[i].id);
+				}, 500 * i);
+			}
+			$timeout(function () {
+				cart.length = [];
+				boolean = false;
 			}, 500 * cart.length + 500);
 			$timeout(function () {
 				alert('Succes');
 			}, 500 * cart.length + 700);
+		},
+		removeItem: function (product, cart) {
+			$http;
+			service
+				.removeCartItem(product)
+				.then(function (response) {
+					var index = cart.findIndex(function (item) {
+						return item.id === product.id;
+					});
+					cart.splice(index, 1);
+					console.log('Successfully deleted item with id:', product);
+				})
+				.catch(function (error) {
+					console.log(error);
+					console.log(product.id);
+				});
 		}
 	};
 

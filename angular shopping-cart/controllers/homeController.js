@@ -1,8 +1,8 @@
 angular.module('Demo').controller('homeController', homeController);
 
-homeController.$inject = ['$http', '$state', 'cartService'];
+homeController.$inject = ['$http', '$state', 'cartService', '$timeout'];
 
-function homeController($http, $state, cartService) {
+function homeController($http, $state, cartService, $timeout) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
@@ -24,11 +24,23 @@ function homeController($http, $state, cartService) {
 		}
 	};
 
+	vm.updateQuantity = function (product) {
+		cartService
+			.updateCartItem(product)
+			.then(function (response) {
+				for (var i = 0; i < vm.cart.length; i++) {
+					if (vm.cart[i].id === product.id) {
+						vm.cart[i].quantity = product.quantity;
+					}
+				}
+			})
+			.catch(function (error) {
+				console.error('Error updating cart:', error);
+			});
+	};
+
 	vm.addToCart = function (product) {
-		cartService.addToCart(product);
-		cartService.getCartData().then(function (response) {
-			vm.cart = response;
-		});
+		cartService.addToCart(product, vm.cart);
 		console.log(vm.cart);
 	};
 
@@ -42,26 +54,11 @@ function homeController($http, $state, cartService) {
 	console.log(vm.cartTotal());
 
 	vm.clearCart = function () {
-		vm.cart = [];
-		vm.cartTotal();
-		$http.post('http://localhost:3000/cart', vm.cart);
+		cartService.clearCart(vm.cart);
 	};
 
 	vm.removeItem = function (product) {
-		$http;
-		cartService
-			.removeCartItem(product)
-			.then(function (response) {
-				var index = vm.cart.findIndex(function (item) {
-					return item.id === product.id;
-				});
-				vm.cart.splice(index, 1);
-				console.log('Successfully deleted item with id:', product);
-			})
-			.catch(function (error) {
-				console.log(error);
-				console.log(product.id);
-			});
+		cartService.removeItem(product, vm.cart);
 	};
 
 	vm.cartTotalQuantity = function () {
@@ -73,6 +70,30 @@ function homeController($http, $state, cartService) {
 	};
 
 	vm.completeOrder = function () {
-		cartService.completeOrder(vm.cart);
+		//vm.isEmptyingBasket = true;
+		cartService.completeOrder(vm.cart, vm.isEmptyingBasket);
+		//.then(function (response) {
+		// 	console.log(response);
+		// 	cartService.getCartData().then(function (cart) {
+		// 		vm.cart = cart;
+		//vm.isEmptyingBasket = false;
+		// 	});
+		// });
+
+		//vm.isEmptyingBasket = false;
+
+		// vm.isEmptyingBasket = true;
+		// for (let i = vm.cart.length - 1; i >= 0; i--) {
+		// 	$timeout(function () {
+		// 		cartService.deleteCart(vm.cart[i].id);
+		// 	}, 500 * i);
+		// }
+		// $timeout(function () {
+		// 	vm.cart.length = [];
+		// 	vm.isEmptyingBasket = false;
+		// }, 500 * vm.cart.length + 500);
+		// $timeout(function () {
+		// 	alert('Succes');
+		// }, 500 * vm.cart.length + 700);
 	};
 }
