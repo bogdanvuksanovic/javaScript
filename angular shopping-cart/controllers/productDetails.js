@@ -12,9 +12,5 @@ function productDetailsController($http, $stateParams, cartService) {
 
 	vm.addToCart = function (product) {
 		cartService.addToCart(product, vm.cart);
-		cartService.getCartData().then(function (response) {
-			vm.cart = response;
-		});
-		console.log(vm.cart);
 	};
 }
