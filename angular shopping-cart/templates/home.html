@@ -11,7 +11,7 @@
 		<img src="{{product.imageURL}}" alt="{{product.imageURL}}" ui-sref="productDetails({id:product.id})">
 		<h4 ui-sref="productDetails({id:product.id})">{{product.name}}</h4>
 		<div class="description">
-				<p style="color: #626262;">Price: ${{product.price}}</p>
+				<p>Price: ${{product.price}}</p>
 		<div class="addToCart">
 			<button ng-click="vm.addToCart(product)">Add To Cart</button>
 		</div>
@@ -19,7 +19,8 @@
 </div>
 </div>
 <div class="showAndHide">
-  <button ng-click="showCart = !showCart"><i class="bi bi-basket3-fill"></i></button>
+  <button class="countButton" ng-click="showCart = !showCart"><i class="bi bi-basket3-fill"></i></button>
+  <span class="badge">{{vm.cartTotalQuantity()}}</span>
 </div>
 <div class="items" ng-show="showCart">
     <h2>Basket</h2>
@@ -31,16 +32,21 @@
         <th>Quantity</th>
         <th>Total</th>
       </tr>
-      <tr ng-repeat="item in vm.cart">
+      <tr ng-if="!vm.isEmptyingBasket" ng-repeat="item in vm.cart">
         <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
         <td>{{ item.name }}</td>
         <td>${{ item.price }}</td>
-        <td><input type="number" ng-model="item.quantity" min="1" ng-change="vm.updateCart()"></td>
+        <td><input type="number" ng-model="item.quantity" ng-change="vm.updateQuantity(item)" min="1" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
-		    <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>
+        <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>     
+      </tr>
+      <tr ng-if="vm.isEmptyingBasket">
+        <td colspan="6" class="emptying-basket">
+          <i class="fa fa-spinner fa-spin"></i> Emptying basket...
+        </td>
       </tr>
       <div id="red-button">
-      <tr >
+      <tr ng-if="!vm.isEmptyingBasket">
         <td></td>
         <td></td>
         <td><b>Total:</b></td>

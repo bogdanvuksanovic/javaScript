@@ -133,6 +133,30 @@
     cursor: pointer;
   }
 
+  .allPage .boxes .col h4{
+    padding-top: 7px;
+  }
+
+  .allPage .boxes .col img:hover{
+    width: 110%;
+    height: 110%;
+  }
+
+  .allPage .boxes .col .description p{
+    padding-top: 10px;
+    color: #626262;
+  }
+
+  .allPage .boxes .col .addToCart button{
+    border: none;
+    height: 30px;
+  }
+
+  .allPage .boxes .col .addToCart button:hover{
+    background-color: #494949;
+    color: #eee;
+  }
+
   .nameAndPrice{
     padding-top: 5px;
   }
@@ -161,6 +185,11 @@
     border-radius: 5px;
   }
 
+  .searchInput button:hover{
+    background-color: #494949;
+    color: #eee;
+  }
+
   .red-button td button{
     background-color: red;
     color: white;
@@ -175,6 +204,11 @@
     width: 50px;
     border: none;
     border-radius: 3px;
+  }
+  
+  .showAndHide button:hover{
+    background-color: #494949;
+    color: #eee;
   }
 
   .productDetails{
@@ -199,6 +233,12 @@
     width: 150px;
     cursor: pointer;
     border-style: none;
+    font-weight: bold;
+  }
+
+  .descriptionForProduct button:hover{
+    background-color: #494949;
+    color: white;
   }
 
   .descriptionForProduct h2{
@@ -234,4 +274,27 @@
 
   i{
     align-items: right;
+  }
+
+  .emptying-basket{
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  .countButton{
+    height: 25px;
+    width: 50px;
+    border: none;
+    border-radius: 3px;
+  }
+
+  .countButton .badge{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
   }
