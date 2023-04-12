@@ -1,6 +1,6 @@
 angular.module('Demo').factory('cartService', cartService);
 
-function cartService($http, $timeout) {
+function cartService($http, $timeout, $stateParams) {
 	var vm = this;
 	vm.cart = [];
 	var service = {
@@ -27,6 +27,15 @@ function cartService($http, $timeout) {
 		},
 		saveCartData: function (cart) {
 			return $http.post('http://localhost:3000/cart', cart);
+		},
+		getProductDetails: function () {
+			return $http({
+				url: 'http://localhost:3000/items',
+				params: { id: $stateParams.id },
+				method: 'get'
+			}).then(function (response) {
+				return response.data[0];
+			});
 		},
 		addToCart: function (product, cart) {
 			if (!Array.isArray(vm.cart)) {
