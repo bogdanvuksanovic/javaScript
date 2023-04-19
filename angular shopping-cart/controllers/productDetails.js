@@ -2,7 +2,7 @@ angular.module('Demo').controller('productDetailsController', productDetailsCont
 
 productDetailsController.$inject = ['$http', '$stateParams', 'cartService'];
 
-function productDetailsController($http, $stateParams, cartService) {
+function productDetailsController(cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.addToCart = addToCart;

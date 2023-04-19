@@ -78,30 +78,6 @@ function homeController($http, $state, cartService, $timeout) {
 	}
 
 	function completeOrder() {
-		//vm.isEmptyingBasket = true;
 		cartService.completeOrder(vm.cart, vm.isEmptyingBasket);
-		//.then(function (response) {
-		// 	console.log(response);
-		// 	cartService.getCartData().then(function (cart) {
-		// 		vm.cart = cart;
-		//vm.isEmptyingBasket = false;
-		// 	});
-		// });
-
-		//vm.isEmptyingBasket = false;
-
-		// vm.isEmptyingBasket = true;
-		// for (let i = vm.cart.length - 1; i >= 0; i--) {
-		// 	$timeout(function () {
-		// 		cartService.deleteCart(vm.cart[i].id);
-		// 	}, 500 * i);
-		// }
-		// $timeout(function () {
-		// 	vm.cart.length = [];
-		// 	vm.isEmptyingBasket = false;
-		// }, 500 * vm.cart.length + 500);
-		// $timeout(function () {
-		// 	alert('Succes');
-		// }, 500 * vm.cart.length + 700);
 	}
 }
