@@ -6,7 +6,7 @@ function productSearchController($http, $stateParams, cartService) {
 	var vm = this;
 	vm.addToCart = addToCart;
 	vm.cartTotal = cartTotal;
-	vmclearCart = clearCart;
+	vm.clearCart = clearCart;
 	vm.removeItem = removeItem;
 	vm.completeOrder = completeOrder;
 
@@ -24,10 +24,7 @@ function productSearchController($http, $stateParams, cartService) {
 	}
 
 	function addToCart(product) {
-		cartService.addToCart(product);
-		cartService.getCartData().then(function (response) {
-			vm.cart = response;
-		});
+		cartService.addToCart(product, vm.cart);
 	}
 	function cartTotal() {
 		var totalPrice = 0;
