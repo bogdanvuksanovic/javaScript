@@ -4,6 +4,11 @@ productSearchController.$inject = ['$http', '$stateParams', '$timeout', 'cartSer
 
 function productSearchController($http, $stateParams, $timeout, cartService) {
 	var vm = this;
+	vm.addToCart = addToCart;
+	vm.cartTotal = cartTotal;
+	vmclearCart = clearCart;
+	vm.removeItem = removeItem;
+	vm.completeOrder = completeOrder;
 
 	cartService.getCartData().then(function (response) {
 		vm.cart = response;
@@ -22,7 +27,7 @@ function productSearchController($http, $stateParams, $timeout, cartService) {
 	// 	vm.cart = response.data;
 	// });
 
-	vm.addToCart = function (product) {
+	function addToCart(product) {
 		// var cartItemIndex = vm.cart.findIndex(function (item) {
 		// 	return item.productID === product.id;
 		// });
@@ -60,23 +65,23 @@ function productSearchController($http, $stateParams, $timeout, cartService) {
 		cartService.getCartData().then(function (response) {
 			vm.cart = response;
 		});
-	};
-	vm.cartTotal = function () {
+	}
+	function cartTotal() {
 		var totalPrice = 0;
 		angular.forEach(vm.cart, function (item) {
 			totalPrice += item.price * item.quantity;
 		});
 		return totalPrice;
-	};
+	}
 	console.log(vm.cartTotal());
 
-	vm.clearCart = function () {
+	function clearCart() {
 		vm.cart = [];
 		vm.cartTotal();
 		$http.post('http://localhost:3000/cart', vm.cart);
-	};
+	}
 
-	vm.removeItem = function (items) {
+	function removeItem(items) {
 		$http
 			.delete('http://localhost:3000/cart/' + items.id)
 			.then(function (response) {
@@ -90,7 +95,7 @@ function productSearchController($http, $stateParams, $timeout, cartService) {
 				console.log(error);
 				console.log(items.id);
 			});
-	};
+	}
 
 	// vm.updateCart = function () {
 	// 	$http.put('http://localhost:3000/cart/' + vm.cart[cartItemIndex].id, vm.cart[cartItemIndex]).then(function (response) {
@@ -98,7 +103,7 @@ function productSearchController($http, $stateParams, $timeout, cartService) {
 	// 	});
 	// };
 
-	vm.completeOrder = function () {
+	function completeOrder() {
 		//vm.cart = [];
 		// console.log(item);
 		// console.log(item.id);
@@ -117,5 +122,5 @@ function productSearchController($http, $stateParams, $timeout, cartService) {
 		// }, 500 * vm.cart.length + 500);
 		// alert('Your order is succesfuly completed!');
 		cartService.completeOrder(vm.cart);
-	};
+	}
 }

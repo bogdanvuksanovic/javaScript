@@ -5,12 +5,13 @@ productDetailsController.$inject = ['$http', '$stateParams', 'cartService'];
 function productDetailsController($http, $stateParams, cartService) {
 	var vm = this;
 	vm.cart = [];
+	vm.addToCart = addToCart;
 
 	cartService.getProductDetails().then(function (response) {
 		vm.item = response;
 	});
 
-	vm.addToCart = function (product) {
+	function addToCart(product) {
 		cartService.addToCart(product, vm.cart);
-	};
+	}
 }

@@ -66,22 +66,5 @@
       "imageURL": "imgs/nikeShoes.webp"
     }
   ],
-  "cart": [
-    {
-      "productID": 4,
-      "name": "Nike Academy Team",
-      "price": 50,
-      "quantity": 1,
-      "imageURL": "imgs/bag.jpeg",
-      "id": 1
-    },
-    {
-      "productID": 3,
-      "name": "Nike Air Max Plus",
-      "price": 190,
-      "quantity": 1,
-      "imageURL": "imgs/shoes.jpeg",
-      "id": 2
-    }
-  ]
+  "cart": []
 }
