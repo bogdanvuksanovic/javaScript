@@ -62,7 +62,10 @@ function homeController($http, $state, cartService, $timeout) {
 	console.log(vm.cartTotal());
 
 	function clearCart() {
-		cartService.clearCart(vm.cart);
+		vm.isEmptyingBasket = true;
+		cartService.clearCart(vm.cart).then(function () {
+			vm.isEmptyingBasket = false;
+		});
 	}
 
 	function removeItem(product) {
@@ -78,6 +81,9 @@ function homeController($http, $state, cartService, $timeout) {
 	}
 
 	function completeOrder() {
-		cartService.completeOrder(vm.cart, vm.isEmptyingBasket);
+		vm.isEmptyingBasket = true;
+		cartService.completeOrder(vm.cart).then(function () {
+			vm.isEmptyingBasket = false;
+		});
 	}
 }

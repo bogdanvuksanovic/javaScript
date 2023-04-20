@@ -1,6 +1,6 @@
 angular.module('Demo').factory('cartService', cartService);
 
-function cartService($http, $timeout, $stateParams) {
+function cartService($http, $timeout, $stateParams, $q) {
 	var service = {
 		getProducts: getProducts,
 		getCartData: getCartData,
@@ -11,7 +11,6 @@ function cartService($http, $timeout, $stateParams) {
 		getProductDetails: getProductDetails,
 		addToCart: addToCart,
 		clearCart: clearCart,
-		completeOrder: completeOrder,
 		completeOrder: completeOrder,
 		removeItem: removeItem
 	};
@@ -97,6 +96,7 @@ function cartService($http, $timeout, $stateParams) {
 	}
 
 	function clearCart(cart) {
+		var deferred = $q.defer();
 		for (let i = cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
 				service.deleteCart(cart[i].id);
@@ -104,14 +104,16 @@ function cartService($http, $timeout, $stateParams) {
 		}
 		$timeout(function () {
 			cart.length = [];
+			deferred.resolve();
 		}, 500 * cart.length + 500);
 		$timeout(function () {
 			alert('Your order is deleted');
 		}, 500 * cart.length + 700);
+		return deferred.promise;
 	}
 
-	function completeOrder(cart, boolean) {
-		boolean = true;
+	function completeOrder(cart) {
+		var deferred = $q.defer();
 		for (let i = cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
 				service.deleteCart(cart[i].id);
@@ -119,11 +121,12 @@ function cartService($http, $timeout, $stateParams) {
 		}
 		$timeout(function () {
 			cart.length = [];
-			boolean = false;
+			deferred.resolve();
 		}, 500 * cart.length + 500);
 		$timeout(function () {
 			alert('Succes');
 		}, 500 * cart.length + 700);
+		return deferred.promise;
 	}
 
 	function removeItem(product, cart) {
