@@ -1,22 +1,14 @@
 angular.module('Demo').controller('productDetailsController', productDetailsController);
 
-productDetailsController.$inject = ['$http', '$stateParams', 'cartService'];
+productDetailsController.$inject = ['cartService'];
 
-function productDetailsController($http, cartService, $stateParams) {
+function productDetailsController(cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.addToCart = addToCart;
 
-	// cartService.getProductDetails().then(function (response) {
-	// 	vm.item = response;
-	// });
-
-	$http({
-		url: 'http://localhost:3000/items',
-		params: { id: $stateParams.id },
-		method: 'get'
-	}).then(function (response) {
-		vm.item = response.data[0];
+	cartService.getProductDetails().then(function (response) {
+		vm.item = response;
 	});
 
 	function addToCart(product) {
