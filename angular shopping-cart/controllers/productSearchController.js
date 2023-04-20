@@ -14,14 +14,9 @@ function productSearchController($http, $stateParams, cartService) {
 		vm.cart = response;
 	});
 
-	if ($stateParams.name) {
-		$http({
-			url: 'http://localhost:3000/items?name_like=' + $stateParams.name,
-			method: 'get'
-		}).then(function (response) {
-			vm.items = response.data;
-		});
-	}
+	cartService.getSearchedData().then(function (response) {
+		vm.items = response;
+	});
 
 	function addToCart(product) {
 		cartService.addToCart(product, vm.cart);
@@ -36,25 +31,11 @@ function productSearchController($http, $stateParams, cartService) {
 	console.log(vm.cartTotal());
 
 	function clearCart() {
-		vm.cart = [];
-		vm.cartTotal();
-		$http.post('http://localhost:3000/cart', vm.cart);
+		cartService.clearCart(vm.cart);
 	}
 
 	function removeItem(items) {
-		$http
-			.delete('http://localhost:3000/cart/' + items.id)
-			.then(function (response) {
-				var index = vm.cart.findIndex(function (item) {
-					return item.id === items.id;
-				});
-				vm.cart.splice(index, 1);
-				console.log('Successfully deleted item with id:', items);
-			})
-			.catch(function (error) {
-				console.log(error);
-				console.log(items.id);
-			});
+		cartService.removeItem(items, vm.cart);
 	}
 
 	function completeOrder() {

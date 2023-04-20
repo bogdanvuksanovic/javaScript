@@ -4,6 +4,7 @@ function cartService($http, $timeout, $stateParams, $q) {
 	var service = {
 		getProducts: getProducts,
 		getCartData: getCartData,
+		getSearchedData: getSearchedData,
 		updateCartItem: updateCartItem,
 		removeCartItem: removeCartItem,
 		deleteCart: deleteCart,
@@ -27,6 +28,17 @@ function cartService($http, $timeout, $stateParams, $q) {
 		return $http.get('http://localhost:3000/cart').then(function (response) {
 			return response.data;
 		});
+	}
+
+	function getSearchedData() {
+		if ($stateParams.name) {
+			return $http({
+				url: 'http://localhost:3000/items?name_like=' + $stateParams.name,
+				method: 'get'
+			}).then(function (response) {
+				return response.data;
+			});
+		}
 	}
 
 	function updateCartItem(item) {
