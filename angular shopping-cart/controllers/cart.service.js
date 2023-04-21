@@ -1,6 +1,6 @@
 angular.module('Demo').factory('cartService', cartService);
 
-function cartService($http, $timeout, $stateParams, $q) {
+function cartService($http, $timeout, $stateParams, $q, $state) {
 	var service = {
 		getProducts: getProducts,
 		getCartData: getCartData,
@@ -11,6 +11,7 @@ function cartService($http, $timeout, $stateParams, $q) {
 		saveCartData: saveCartData,
 		getProductDetails: getProductDetails,
 		addToCart: addToCart,
+		searchItem: searchItem,
 		clearCart: clearCart,
 		completeOrder: completeOrder,
 		removeItem: removeItem
@@ -101,6 +102,14 @@ function cartService($http, $timeout, $stateParams, $q) {
 		} else {
 			cart[cartItemIndex].quantity++;
 			service.updateCartItem(cart[cartItemIndex]);
+		}
+	}
+
+	function searchItem(name) {
+		if (name) {
+			$state.go('productSearch', { name: name });
+		} else {
+			$state.go('home');
 		}
 	}
 

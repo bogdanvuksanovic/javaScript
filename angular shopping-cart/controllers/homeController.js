@@ -25,11 +25,7 @@ function homeController($state, cartService) {
 	});
 
 	function searchItem() {
-		if (vm.name) {
-			$state.go('productSearch', { name: vm.name });
-		} else {
-			$state.go('home');
-		}
+		cartService.searchItem(vm.name);
 	}
 
 	function updateQuantity(product) {
