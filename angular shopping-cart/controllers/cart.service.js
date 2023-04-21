@@ -74,7 +74,6 @@ function cartService($http, $timeout, $stateParams, $q) {
 			cart = [];
 		}
 		var cartItemIndex = cart.findIndex(function (item) {
-			console.log(item);
 			return item.productID === product.id;
 		});
 		if (cartItemIndex === -1) {
@@ -98,13 +97,11 @@ function cartService($http, $timeout, $stateParams, $q) {
 					id: t
 				};
 				cart.push(t);
-				console.log(cart);
 			});
 		} else {
 			cart[cartItemIndex].quantity++;
 			service.updateCartItem(cart[cartItemIndex]);
 		}
-		console.log(cart);
 	}
 
 	function clearCart(cart) {
@@ -154,7 +151,6 @@ function cartService($http, $timeout, $stateParams, $q) {
 			})
 			.catch(function (error) {
 				console.log(error);
-				console.log(product.id);
 			});
 	}
 }

@@ -2,7 +2,7 @@ angular.module('Demo').controller('productSearchController', productSearchContro
 
 productSearchController.$inject = ['$http', '$stateParams', 'cartService'];
 
-function productSearchController($http, $stateParams, cartService) {
+function productSearchController(cartService) {
 	var vm = this;
 	vm.addToCart = addToCart;
 	vm.cartTotal = cartTotal;
@@ -28,7 +28,6 @@ function productSearchController($http, $stateParams, cartService) {
 		});
 		return totalPrice;
 	}
-	console.log(vm.cartTotal());
 
 	function clearCart() {
 		cartService.clearCart(vm.cart);

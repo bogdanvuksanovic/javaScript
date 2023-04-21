@@ -2,7 +2,7 @@ angular.module('Demo').controller('homeController', homeController);
 
 homeController.$inject = ['$http', '$state', 'cartService', '$timeout'];
 
-function homeController($http, $state, cartService, $timeout) {
+function homeController($state, cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
@@ -49,7 +49,6 @@ function homeController($http, $state, cartService, $timeout) {
 
 	function addToCart(product) {
 		cartService.addToCart(product, vm.cart);
-		console.log(vm.cart);
 	}
 
 	function cartTotal() {
@@ -59,7 +58,6 @@ function homeController($http, $state, cartService, $timeout) {
 		});
 		return totalPrice;
 	}
-	console.log(vm.cartTotal());
 
 	function clearCart() {
 		vm.isEmptyingBasket = true;
