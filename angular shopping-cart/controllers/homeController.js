@@ -1,6 +1,6 @@
 angular.module('Demo').controller('homeController', homeController);
 
-homeController.$inject = ['$http', '$state', 'cartService', '$timeout'];
+homeController.$inject = ['$state', 'cartService'];
 
 function homeController($state, cartService) {
 	var vm = this;
