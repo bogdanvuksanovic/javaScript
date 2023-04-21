@@ -1,12 +1,13 @@
 angular.module('Demo').controller('homeController', homeController);
 
-homeController.$inject = ['$state', 'cartService'];
+homeController.$inject = ['cartService'];
 
 function homeController(cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
+	vm.searchText = '';
 	vm.searchItem = searchItem;
 	vm.updateQuantity = updateQuantity;
 	vm.addToCart = addToCart;
@@ -24,9 +25,21 @@ function homeController(cartService) {
 		vm.cart = response;
 	});
 
-	function searchItem() {
+	function searchItem(item) {
 		cartService.searchItem(vm.name);
+		if (vm.searchText == undefined) {
+			return true;
+		} else {
+			if (item.name.toLowerCase().indexOf(vm.searchText.toLowerCase()) != -1) {
+				return true;
+			}
+		}
+		return false;
 	}
+
+	vm.liveSearch = function () {
+		vm.searchItem = { name: vm.searchText };
+	};
 
 	function updateQuantity(product) {
 		cartService
