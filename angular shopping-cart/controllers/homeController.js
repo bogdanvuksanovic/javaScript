@@ -2,7 +2,7 @@ angular.module('Demo').controller('homeController', homeController);
 
 homeController.$inject = ['$state', 'cartService'];
 
-function homeController($state, cartService) {
+function homeController(cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
