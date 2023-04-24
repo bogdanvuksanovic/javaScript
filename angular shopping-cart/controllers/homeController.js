@@ -8,7 +8,7 @@ function homeController(cartService) {
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
 	vm.searchText = '';
-	vm.searchItem = searchItem;
+	vm.liveSearch = liveSearch;
 	vm.updateQuantity = updateQuantity;
 	vm.addToCart = addToCart;
 	vm.cartTotal = cartTotal;
@@ -25,21 +25,9 @@ function homeController(cartService) {
 		vm.cart = response;
 	});
 
-	function searchItem(item) {
-		cartService.searchItem(vm.name);
-		if (vm.searchText == undefined) {
-			return true;
-		} else {
-			if (item.name.toLowerCase().indexOf(vm.searchText.toLowerCase()) != -1) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	vm.liveSearch = function () {
+	function liveSearch() {
 		vm.searchItem = { name: vm.searchText };
-	};
+	}
 
 	function updateQuantity(product) {
 		cartService
