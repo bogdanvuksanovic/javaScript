@@ -142,7 +142,7 @@ function cartService($http, $timeout, $stateParams, $q, $state) {
 			deferred.resolve();
 		}, 500 * cart.length + 500);
 		$timeout(function () {
-			alert('Succes');
+			alert('Your order is succesful');
 		}, 500 * cart.length + 700);
 		return deferred.promise;
 	}
