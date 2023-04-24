@@ -1,13 +1,14 @@
 angular.module('Demo').controller('homeController', homeController);
 
-homeController.$inject = ['$http', '$state', 'cartService', '$timeout'];
+homeController.$inject = ['cartService'];
 
-function homeController($http, $state, cartService, $timeout) {
+function homeController(cartService) {
 	var vm = this;
 	vm.cart = [];
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
-	vm.searchItem = searchItem;
+	vm.searchText = '';
+	vm.liveSearch = liveSearch;
 	vm.updateQuantity = updateQuantity;
 	vm.addToCart = addToCart;
 	vm.cartTotal = cartTotal;
@@ -24,12 +25,8 @@ function homeController($http, $state, cartService, $timeout) {
 		vm.cart = response;
 	});
 
-	function searchItem() {
-		if (vm.name) {
-			$state.go('productSearch', { name: vm.name });
-		} else {
-			$state.go('home');
-		}
+	function liveSearch() {
+		vm.searchItem = { name: vm.searchText };
 	}
 
 	function updateQuantity(product) {
@@ -49,7 +46,6 @@ function homeController($http, $state, cartService, $timeout) {
 
 	function addToCart(product) {
 		cartService.addToCart(product, vm.cart);
-		console.log(vm.cart);
 	}
 
 	function cartTotal() {
@@ -59,10 +55,12 @@ function homeController($http, $state, cartService, $timeout) {
 		});
 		return totalPrice;
 	}
-	console.log(vm.cartTotal());
 
 	function clearCart() {
-		cartService.clearCart(vm.cart);
+		vm.isEmptyingBasket = true;
+		cartService.clearCart(vm.cart).then(function () {
+			vm.isEmptyingBasket = false;
+		});
 	}
 
 	function removeItem(product) {
@@ -78,6 +76,9 @@ function homeController($http, $state, cartService, $timeout) {
 	}
 
 	function completeOrder() {
-		cartService.completeOrder(vm.cart, vm.isEmptyingBasket);
+		vm.isEmptyingBasket = true;
+		cartService.completeOrder(vm.cart).then(function () {
+			vm.isEmptyingBasket = false;
+		});
 	}
 }

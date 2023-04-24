@@ -1,13 +1,10 @@
 <h1>HOME PAGE</h1>
 <div class="searchInput">
-  <input type="text" ng-model="vm.name"  placeholder="Search">
-  <button ng-click="vm.searchItem()"><i class="bi bi-search"></i></button>
-  <!-- <input type="text" ng-model="searchText" ng-change="search()"> -->
-
+  <input type="text" ng-model="vm.searchText" placeholder="Search" ng-change="vm.liveSearch()">
 </div>
 <div class="allPage">
 <div class="boxes">
-	<div class="col" ng-repeat="product in vm.items">
+  <div class="col" ng-repeat="product in vm.items | filter:vm.searchItem">
 		<img src="{{product.imageURL}}" alt="{{product.imageURL}}" ui-sref="productDetails({id:product.id})">
 		<h4 ui-sref="productDetails({id:product.id})">{{product.name}}</h4>
 		<div class="description">

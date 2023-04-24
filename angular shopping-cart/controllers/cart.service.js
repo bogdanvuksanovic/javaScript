@@ -1,17 +1,18 @@
 angular.module('Demo').factory('cartService', cartService);
 
-function cartService($http, $timeout, $stateParams) {
+function cartService($http, $timeout, $stateParams, $q, $state) {
 	var service = {
 		getProducts: getProducts,
 		getCartData: getCartData,
+		getSearchedData: getSearchedData,
 		updateCartItem: updateCartItem,
 		removeCartItem: removeCartItem,
 		deleteCart: deleteCart,
 		saveCartData: saveCartData,
 		getProductDetails: getProductDetails,
 		addToCart: addToCart,
+		searchItem: searchItem,
 		clearCart: clearCart,
-		completeOrder: completeOrder,
 		completeOrder: completeOrder,
 		removeItem: removeItem
 	};
@@ -28,6 +29,17 @@ function cartService($http, $timeout, $stateParams) {
 		return $http.get('http://localhost:3000/cart').then(function (response) {
 			return response.data;
 		});
+	}
+
+	function getSearchedData() {
+		if ($stateParams.name) {
+			return $http({
+				url: 'http://localhost:3000/items?name_like=' + $stateParams.name,
+				method: 'get'
+			}).then(function (response) {
+				return response.data;
+			});
+		}
 	}
 
 	function updateCartItem(item) {
@@ -63,7 +75,6 @@ function cartService($http, $timeout, $stateParams) {
 			cart = [];
 		}
 		var cartItemIndex = cart.findIndex(function (item) {
-			console.log(item);
 			return item.productID === product.id;
 		});
 		if (cartItemIndex === -1) {
@@ -87,16 +98,23 @@ function cartService($http, $timeout, $stateParams) {
 					id: t
 				};
 				cart.push(t);
-				console.log(cart);
 			});
 		} else {
 			cart[cartItemIndex].quantity++;
 			service.updateCartItem(cart[cartItemIndex]);
 		}
-		console.log(cart);
+	}
+
+	function searchItem(name) {
+		if (name) {
+			$state.go('productSearch', { name: name });
+		} else {
+			$state.go('home');
+		}
 	}
 
 	function clearCart(cart) {
+		var deferred = $q.defer();
 		for (let i = cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
 				service.deleteCart(cart[i].id);
@@ -104,14 +122,16 @@ function cartService($http, $timeout, $stateParams) {
 		}
 		$timeout(function () {
 			cart.length = [];
+			deferred.resolve();
 		}, 500 * cart.length + 500);
 		$timeout(function () {
 			alert('Your order is deleted');
 		}, 500 * cart.length + 700);
+		return deferred.promise;
 	}
 
-	function completeOrder(cart, boolean) {
-		boolean = true;
+	function completeOrder(cart) {
+		var deferred = $q.defer();
 		for (let i = cart.length - 1; i >= 0; i--) {
 			$timeout(function () {
 				service.deleteCart(cart[i].id);
@@ -119,11 +139,12 @@ function cartService($http, $timeout, $stateParams) {
 		}
 		$timeout(function () {
 			cart.length = [];
-			boolean = false;
+			deferred.resolve();
 		}, 500 * cart.length + 500);
 		$timeout(function () {
 			alert('Succes');
 		}, 500 * cart.length + 700);
+		return deferred.promise;
 	}
 
 	function removeItem(product, cart) {
@@ -139,7 +160,6 @@ function cartService($http, $timeout, $stateParams) {
 			})
 			.catch(function (error) {
 				console.log(error);
-				console.log(product.id);
 			});
 	}
 }
