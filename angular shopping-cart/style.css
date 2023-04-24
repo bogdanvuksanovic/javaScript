@@ -298,3 +298,22 @@
     background-color: red;
     color: white;
   }
+
+  .returnToHome{
+    margin-top: 20px;
+    margin-left: 50px;
+  }
+
+  .returnToHome button{
+    border-radius: 5px;
+    height: 40px;
+    width: 175px;
+    cursor: pointer;
+    border-style: none;
+    font-weight: bold;
+  }
+
+  .returnToHome button:hover{
+    background-color: #494949;
+    color: rgb(255, 0, 0);
+  }
