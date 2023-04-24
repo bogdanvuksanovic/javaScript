@@ -53,6 +53,10 @@
     display: block;
   }
 
+  .allPage {
+    width: 100%;
+  }
+
   .allPage .boxes .col h4{
     color: #626262;
   }
@@ -176,20 +180,6 @@
     text-align: left;
   }
 
-  .searchInput button {
-    height: 33px;
-    margin-left: 5px;
-    margin-bottom: 10px;
-    width: 50px;
-    border: none;
-    border-radius: 5px;
-  }
-
-  .searchInput button:hover{
-    background-color: #494949;
-    color: #eee;
-  }
-
   .red-button td button{
     background-color: red;
     color: white;
@@ -204,6 +194,7 @@
     width: 50px;
     border: none;
     border-radius: 3px;
+    align-items: right;
   }
   
   .showAndHide button:hover{
