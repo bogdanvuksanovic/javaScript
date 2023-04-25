@@ -8,18 +8,6 @@ angular.module('Demo', ['ui.router']).config(function ($stateProvider, $urlMatch
 			controller: 'homeController',
 			controllerAs: 'vm'
 		})
-		// .state('items', {
-		// 	url: '/cart',
-		// 	templateUrl: './templates/cart.html',
-		// 	controller: 'itemsController',
-		// 	controllerAs: 'vm'
-		// })
-		// .state('productSearch', {
-		// 	url: '/home/:name',
-		// 	templateUrl: './templates/home.html',
-		// 	controller: 'productSearchController',
-		// 	controllerAs: 'vm'
-		// })
 		.state('productDetails', {
 			url: '/productDetails/:id',
 			templateUrl: './templates/productDetails.html',
