@@ -36,6 +36,7 @@
         <td><input type="number" ng-model="item.quantity" ng-change="vm.updateQuantity(item)" min="1" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
         <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>     
+        
       </tr>
       <tr ng-if="vm.isEmptyingBasket">
         <td colspan="6" class="emptying-basket">
@@ -45,7 +46,7 @@
       <div id="red-button">
       <tr ng-if="!vm.isEmptyingBasket">
         <td></td>
-        <td></td>
+        <td ng-if="vm.messageQuantity"><p>Quantity must be greater than 0</p></td>
         <td><b>Total:</b></td>
         <td>${{ vm.cartTotal() }}</td>
         <td><button ng-click="vm.clearCart()" style="background-color: red; color: white;">Clear Cart</button></td>
