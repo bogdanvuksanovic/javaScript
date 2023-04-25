@@ -6,6 +6,7 @@
 		<div class="prodDetailsPrice">
 			<p>Price: ${{vm.item.price}}</p>
 			<button ng-click="vm.addToCart(vm.item)">Add To Cart</button>
+			<p ng-if="vm.addedProduct">Product is added</p>
 		</div>
 	</div>
 </div>
