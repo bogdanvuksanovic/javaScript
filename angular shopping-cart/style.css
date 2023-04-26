@@ -18,9 +18,11 @@
     align-items: center;
     width: 400px;
     margin-right: 70px;
+    color: red;
+    font-weight: bold;
   }
   
-  .items h2, th, td, input {
+  .items h2, th, td, input, tr {
     font-family: Arial, sans-serif;
     font-size: 14px;
     text-align: center;
@@ -46,6 +48,12 @@
   
   td {
     border-bottom: 1px solid #eee;
+  }
+
+  .allPage{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
   
   table {
@@ -112,10 +120,10 @@
   }
 
   .items h2{
-    text-align: left;
+    text-align: center;
     position: relative;
-    margin: 60px 160px;
-    margin-left: 253px;
+    padding-bottom: 20px;
+    padding-top: 15px;
     color: black;
   }
 
@@ -195,6 +203,11 @@
     border: none;
     border-radius: 3px;
     align-items: right;
+  }
+
+  .showAndHide .badge{
+    font-weight: bold;
+    color: red;
   }
   
   .showAndHide button:hover{
@@ -292,7 +305,7 @@
 
   .returnToHome{
     margin-top: 20px;
-    margin-left: 50px;
+    margin-left: 450px;
   }
 
   .returnToHome button{
