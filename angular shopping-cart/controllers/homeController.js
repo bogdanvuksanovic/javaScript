@@ -7,6 +7,7 @@ function homeController(cartService) {
 	vm.cart = [];
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
+	vm.messageQuantity = false;
 	vm.searchText = '';
 	vm.liveSearch = liveSearch;
 	vm.updateQuantity = updateQuantity;
@@ -30,18 +31,25 @@ function homeController(cartService) {
 	}
 
 	function updateQuantity(product) {
-		cartService
-			.updateCartItem(product)
-			.then(function (response) {
-				for (var i = 0; i < vm.cart.length; i++) {
-					if (vm.cart[i].id === product.id) {
-						vm.cart[i].quantity = product.quantity;
+		if (product.quantity == null || product.quantity < 1) {
+			product.quantity = 1;
+			vm.messageQuantity = true;
+			//alert('Quantity must be greater than 0');
+		} else {
+			vm.messageQuantity = false;
+			cartService
+				.updateCartItem(product)
+				.then(function (response) {
+					for (var i = 0; i < vm.cart.length; i++) {
+						if (vm.cart[i].id === product.id) {
+							vm.cart[i].quantity = product.quantity;
+						}
 					}
-				}
-			})
-			.catch(function (error) {
-				console.error('Error updating cart:', error);
-			});
+				})
+				.catch(function (error) {
+					console.error('Error updating cart:', error);
+				});
+		}
 	}
 
 	function addToCart(product) {
@@ -57,10 +65,14 @@ function homeController(cartService) {
 	}
 
 	function clearCart() {
-		vm.isEmptyingBasket = true;
-		cartService.clearCart(vm.cart).then(function () {
-			vm.isEmptyingBasket = false;
-		});
+		if (vm.cart.length == 0) {
+			alert('Your basket is empty!');
+		} else {
+			vm.isEmptyingBasket = true;
+			cartService.clearCart(vm.cart).then(function () {
+				vm.isEmptyingBasket = false;
+			});
+		}
 	}
 
 	function removeItem(product) {
@@ -76,9 +88,13 @@ function homeController(cartService) {
 	}
 
 	function completeOrder() {
-		vm.isEmptyingBasket = true;
-		cartService.completeOrder(vm.cart).then(function () {
-			vm.isEmptyingBasket = false;
-		});
+		if (vm.cart.length == 0) {
+			alert('Your basket is empty!');
+		} else {
+			vm.isEmptyingBasket = true;
+			cartService.completeOrder(vm.cart).then(function () {
+				vm.isEmptyingBasket = false;
+			});
+		}
 	}
 }
