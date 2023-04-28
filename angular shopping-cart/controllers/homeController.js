@@ -8,6 +8,7 @@ function homeController(cartService) {
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
 	vm.messageQuantity = false;
+	vm.execute = true;
 	vm.searchText = '';
 	vm.liveSearch = liveSearch;
 	vm.updateQuantity = updateQuantity;
@@ -31,11 +32,13 @@ function homeController(cartService) {
 	}
 
 	function updateQuantity(product) {
-		if (product.quantity == null || product.quantity < 1) {
-			product.quantity = '';
+		if (product.quantity == null) {
+			//product.quantity = '';
 			vm.messageQuantity = true;
+			vm.execute = false;
 		} else {
 			vm.messageQuantity = false;
+			vm.execute = true;
 			cartService
 				.updateCartItem(product)
 				.then(function (response) {
@@ -89,6 +92,8 @@ function homeController(cartService) {
 	function completeOrder() {
 		if (vm.cart.length == 0) {
 			alert('Your basket is empty!');
+		} else if (vm.execute == false) {
+			alert('Quantity must be between 1 and 999');
 		} else {
 			vm.isEmptyingBasket = true;
 			cartService.completeOrder(vm.cart).then(function () {
