@@ -20,9 +20,16 @@ function cartService($http, $timeout, $stateParams, $q, $state) {
 	return service;
 
 	function getProducts() {
-		return $http.get('http://localhost:3000/items').then(function (response) {
-			return response.data;
-		});
+		return $http
+			.get('http://localhost:3000/items')
+			.then(function (response) {
+				return response.data;
+			})
+			.catch(function (error) {
+				console.error(error);
+				alert('Error retrieving products. Please try again later.');
+				throw error;
+			});
 	}
 
 	function getCartData() {

@@ -46,6 +46,7 @@
       <div id="red-button">
       <tr ng-if="!vm.isEmptyingBasket">
         <td class="messageQuantity" ng-if="vm.messageQuantity" colspan="2"><p>Quantity must be between 1 and 999</p></td>
+        <td ng-if="!vm.messageQuantity" colspan="2"></td>
         <td><b>Total:</b></td>
         <td>${{ vm.cartTotal() }}</td>
         <td><button ng-click="vm.clearCart()" style="background-color: red; color: white;">Clear Cart</button></td>

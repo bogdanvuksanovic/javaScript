@@ -147,6 +147,13 @@
     height: 25px;
     width: 100px;
     cursor: pointer;
+    border: none;
+    height: 30px;
+  }
+  
+  button:hover{
+    background-color: #494949;
+    color: #eee;
   }
 
   .allPage .boxes .col h4{
@@ -269,6 +276,10 @@
     padding-bottom: 15px;
   }
 
+  .messageAndButton{
+    display: inline-block;
+  }
+
   a{
     text-decoration: none;
     padding-top: 50px;
@@ -308,8 +319,9 @@
   }
 
   .returnToHome{
-    margin-top: 20px;
-    margin-left: 450px;
+    position: fixed;
+    bottom: 145px;
+    left: 550px;
   }
 
   .returnToHome button{
