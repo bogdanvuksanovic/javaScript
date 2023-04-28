@@ -33,7 +33,7 @@
         <td><img src="{{ item.imageURL }}" alt="{{ item.imageURL }}"></td>
         <td>{{ item.name }}</td>
         <td>${{ item.price }}</td>
-        <td><input type="number" ng-model="item.quantity" ng-change="vm.updateQuantity(item)" min="1" ng-change="vm.updateCart()"></td>
+        <td><input type="number" ng-model="item.quantity" ng-change="vm.updateQuantity(item)" min="1" max="999" ng-change="vm.updateCart()"></td>
         <td>{{ item.quantity * item.price }}</td>
         <td><button ng-click="vm.removeItem(item)" style="width: 30px; height: 30px;"><i class="bi bi-x"></i></button></td>     
         
@@ -45,8 +45,7 @@
       </tr>
       <div id="red-button">
       <tr ng-if="!vm.isEmptyingBasket">
-        <td></td>
-        <td ng-if="vm.messageQuantity"><p>Quantity must be greater than 0</p></td>
+        <td class="messageQuantity" ng-if="vm.messageQuantity" colspan="2"><p>Quantity must be between 1 and 999</p></td>
         <td><b>Total:</b></td>
         <td>${{ vm.cartTotal() }}</td>
         <td><button ng-click="vm.clearCart()" style="background-color: red; color: white;">Clear Cart</button></td>

@@ -34,7 +34,6 @@ function homeController(cartService) {
 		if (product.quantity == null || product.quantity < 1) {
 			product.quantity = '';
 			vm.messageQuantity = true;
-			//alert('Quantity must be greater than 0');
 		} else {
 			vm.messageQuantity = false;
 			cartService
