@@ -17,7 +17,7 @@
   .items{
     align-items: center;
     width: 400px;
-    margin-right: 70px;
+    margin-right: 130px;
     color: red;
     font-weight: bold;
   }
@@ -320,7 +320,7 @@
 
   .returnToHome{
     position: fixed;
-    bottom: 145px;
+    top: 520px;
     left: 550px;
   }
 

@@ -18,6 +18,7 @@ function homeController(cartService) {
 	vm.removeItem = removeItem;
 	vm.cartTotalQuantity = cartTotalQuantity;
 	vm.completeOrder = completeOrder;
+	vm.totalItem = totalItem;
 
 	cartService.getProducts().then(function (response) {
 		vm.items = response;
@@ -32,8 +33,7 @@ function homeController(cartService) {
 	}
 
 	function updateQuantity(product) {
-		if (product.quantity == null) {
-			//product.quantity = '';
+		if (product.quantity < 1 || product.quantity > 999) {
 			vm.messageQuantity = true;
 			vm.execute = false;
 		} else {
@@ -58,10 +58,20 @@ function homeController(cartService) {
 		cartService.addToCart(product, vm.cart);
 	}
 
+	function totalItem(product) {
+		var totalItem;
+		if (vm.execute) {
+			totalItem = product.quantity * product.price;
+		} else {
+			totalItem = 0;
+		}
+		return totalItem;
+	}
+
 	function cartTotal() {
 		var totalPrice = 0;
 		angular.forEach(vm.cart, function (item) {
-			totalPrice += item.price * item.quantity;
+			totalPrice += totalItem(item);
 		});
 		return totalPrice;
 	}
