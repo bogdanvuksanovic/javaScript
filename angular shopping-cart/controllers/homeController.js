@@ -8,6 +8,7 @@ function homeController(cartService) {
 	vm.cartIsOpen = false;
 	vm.isEmptyingBasket = false;
 	vm.messageQuantity = false;
+	vm.execute = true;
 	vm.searchText = '';
 	vm.liveSearch = liveSearch;
 	vm.updateQuantity = updateQuantity;
@@ -17,6 +18,7 @@ function homeController(cartService) {
 	vm.removeItem = removeItem;
 	vm.cartTotalQuantity = cartTotalQuantity;
 	vm.completeOrder = completeOrder;
+	vm.totalItem = totalItem;
 
 	cartService.getProducts().then(function (response) {
 		vm.items = response;
@@ -31,12 +33,12 @@ function homeController(cartService) {
 	}
 
 	function updateQuantity(product) {
-		if (product.quantity == null || product.quantity < 1) {
-			product.quantity = '';
+		if (product.quantity < 1 || product.quantity > 999) {
 			vm.messageQuantity = true;
-			//alert('Quantity must be greater than 0');
+			vm.execute = false;
 		} else {
 			vm.messageQuantity = false;
+			vm.execute = true;
 			cartService
 				.updateCartItem(product)
 				.then(function (response) {
@@ -56,10 +58,20 @@ function homeController(cartService) {
 		cartService.addToCart(product, vm.cart);
 	}
 
+	function totalItem(product) {
+		var totalItem;
+		if (vm.execute) {
+			totalItem = product.quantity * product.price;
+		} else {
+			totalItem = 0;
+		}
+		return totalItem;
+	}
+
 	function cartTotal() {
 		var totalPrice = 0;
 		angular.forEach(vm.cart, function (item) {
-			totalPrice += item.price * item.quantity;
+			totalPrice += totalItem(item);
 		});
 		return totalPrice;
 	}
@@ -90,6 +102,8 @@ function homeController(cartService) {
 	function completeOrder() {
 		if (vm.cart.length == 0) {
 			alert('Your basket is empty!');
+		} else if (vm.execute == false) {
+			alert('Quantity must be between 1 and 999');
 		} else {
 			vm.isEmptyingBasket = true;
 			cartService.completeOrder(vm.cart).then(function () {

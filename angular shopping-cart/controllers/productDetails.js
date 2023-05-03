@@ -12,11 +12,20 @@ function productDetailsController(cartService, $timeout) {
 		vm.item = response;
 	});
 
+	function init() {
+		cartService.getCartData().then(function (response) {
+			vm.cart = response;
+		});
+	}
+
 	function addToCart(product) {
 		vm.addedProduct = true;
 		cartService.addToCart(product, vm.cart);
 		$timeout(function () {
 			vm.addedProduct = false;
-		}, 1500);
+		}, 1000);
+		console.log(vm.cart);
 	}
+
+	init();
 }
