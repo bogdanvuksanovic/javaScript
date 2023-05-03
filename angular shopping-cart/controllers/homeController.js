@@ -93,9 +93,13 @@ function homeController(cartService) {
 
 	function cartTotalQuantity() {
 		var totalQuantity = 0;
-		angular.forEach(vm.cart, function (product) {
-			totalQuantity += product.quantity;
-		});
+		if (vm.execute) {
+			angular.forEach(vm.cart, function (product) {
+				totalQuantity += product.quantity;
+			});
+		} else {
+			totalQuantity = 0;
+		}
 		return totalQuantity;
 	}
 
